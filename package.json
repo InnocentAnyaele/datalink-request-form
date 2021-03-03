@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "concurrently": "^6.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "server": "nodemon server.js",
+    "client": "cd client && npm run start",
+    "dev": "concurrently \"nodemon server.js\" \"npm run client\""
+  },
+  "name": "request-forms",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InnocentAnyaele/Datalink-Request-Form.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/InnocentAnyaele/Datalink-Request-Form/issues"
+  },
+  "homepage": "https://github.com/InnocentAnyaele/Datalink-Request-Form#readme",
+  "description": ""
+}

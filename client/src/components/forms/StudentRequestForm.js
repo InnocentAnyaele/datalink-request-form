@@ -460,12 +460,12 @@
 // 						</span>
 // 					</Modal.Body>
 // 					<Modal.Footer>
-// 						<Button variant='secondary' onClick={handleClose}>
-// 							Close
-// 						</Button>
-// 						<Button variant='primary' type='submit'>
-// 							Submit
-// 						</Button>
+// <Button variant='secondary' onClick={handleClose}>
+// 	Close
+// </Button>
+// <Button variant='primary' type='submit'>
+// 	Submit
+// </Button>
 // 					</Modal.Footer>
 // 				</Form>
 // 			</Modal>

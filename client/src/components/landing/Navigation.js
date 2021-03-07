@@ -1,7 +1,12 @@
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Button } from 'react-bootstrap';
 import './Landing.css';
-import Login from './Login';
+// import AdminLogin from './AdminLogin';
+// import FinancialDepartmentLogin from './FinancialDepartmentLogin';
+// import HeadOfDepartmentLogin from './HeadOfDepartmentLogin';
+// import LibraryLogin from './LibraryLogin';
+// import RegistrarLogin from './RegistrarLogin';
+import UserLogin from './UserLogin';
 
 function Navigation() {
 	return (
@@ -9,16 +14,34 @@ function Navigation() {
 			<Navbar.Brand className='nav-name' href='#home'>
 				DATALINK <span style={{ color: '#1360ef' }}>REQUEST FORMS</span>
 			</Navbar.Brand>
-			{/* <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-        </Nav> */}
-			{/* <Button className='ml-auto' variant='primary'>
-				admin
-			</Button> */}
+
+			{/* <NavDropdown
+				title='Login'
+				className='ml-auto'
+				drop='left'
+				id='login-dropdown'>
+				<NavDropdown.Item>
+					<FinancialDepartmentLogin />
+				</NavDropdown.Item>
+				<NavDropdown.Item>
+					<HeadOfDepartmentLogin />
+				</NavDropdown.Item>
+				<NavDropdown.Item>
+					<LibraryLogin />
+				</NavDropdown.Item>
+				<NavDropdown.Item>
+					<RegistrarLogin />
+				</NavDropdown.Item>
+				<NavDropdown.Divider />
+				<NavDropdown.Item>
+					<AdminLogin />
+				</NavDropdown.Item>
+			</NavDropdown> */}
+
 			<div className='ml-auto'>
-				<Login />
+				<Button vairant='primary'>
+					<UserLogin />
+				</Button>
 			</div>
 		</Navbar>
 	);

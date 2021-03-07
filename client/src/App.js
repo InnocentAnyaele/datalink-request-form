@@ -6,6 +6,7 @@ import StudentRequestFormPage from './components/forms/StudentRequestFormPage';
 import DefermentRequestFormPage from './components/forms/DefermentRequestFormPage';
 import TransferRequestFormPage from './components/forms/TransferRequestFormPage';
 import ClearanceRequestFormPage from './components/forms/ClearanceRequestFormPage';
+import FinancialDepartment from './components/financialDepartment/FinancialDepartment';
 
 function App() {
 	return (
@@ -28,6 +29,7 @@ function App() {
 					path='/clearanceRequestFormPage'
 					component={ClearanceRequestFormPage}
 				/>
+				<Route path='/financialDepartment' component={FinancialDepartment} />
 			</Switch>
 		</Router>
 	);

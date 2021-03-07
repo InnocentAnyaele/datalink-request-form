@@ -1,4 +1,4 @@
-const Admin = require('../models/admin');
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const express = require('express');
@@ -13,15 +13,15 @@ const add = (req, res, next) => {
 			return res.send('Failed to hash password');
 		}
 
-		let admin = new Admin({
+		let user = new User({
 			username: username,
 			password: hashedPass,
 		});
 
-		admin
+		user
 			.save()
-			.then((admin) => {
-				res.status(200).send('admin has been added');
+			.then((user) => {
+				res.status(200).send('user has been added');
 			})
 			.catch((err) => {
 				res.status(400).send(error);
@@ -36,18 +36,16 @@ const login = (req, res, next) => {
 	console.log(username);
 	console.log(password);
 
-	Admin.findOne({ $or: [{ username: username }] }).then((admin) => {
-		if (admin) {
-			bcrypt.compare(password, admin.password, function (err, result) {
+	User.findOne({ $or: [{ username: username }] }).then((user) => {
+		if (user) {
+			bcrypt.compare(password, user.password, function (err, result) {
 				if (err) {
 					res.status(500).send('User does not exist');
 				}
 				if (result) {
-					let token = jwt.sign(
-						{ username: admin.username },
-						'verySecretValue',
-						{ expiresIn: '1h' },
-					);
+					let token = jwt.sign({ username: user.username }, 'verySecretValue', {
+						expiresIn: '1h',
+					});
 					res.status(200).json({
 						message: 'user logged in successfully',
 						token: token,
@@ -80,16 +78,16 @@ const login = (req, res, next) => {
 // 		if (hashedPass) {
 // 			const hashedPassword = hashedPass;
 
-// 			Admin.findOne({ $or: [{ username: username }] })
-// 				.then((admin) => {
-// 					if (admin) {
-// 						bycrypt.compare(password, admin.password, function (err, result) {
+// 			User.findOne({ $or: [{ username: username }] })
+// 				.then((user) => {
+// 					if (user) {
+// 						bycrypt.compare(password, user.password, function (err, result) {
 // 							if (err) {
 // 								res.status(400).send('cannot find a password match');
 // 							}
 // 							if (result) {
-// 								admin.password = hashedPassword;
-// 								admin
+// 								user.password = hashedPassword;
+// 								user
 // 									.save()
 // 									.then((result) => {
 // 										res.status(200).send('Password changed successfully');

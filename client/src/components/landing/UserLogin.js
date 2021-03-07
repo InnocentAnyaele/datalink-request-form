@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Alert } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
-function Login() {
+function UserLogin() {
 	const [show, setShow] = useState(false);
-	const [username, setUsername] = useState('');
+	const [userSelect, setUserSelect] = useState('admin');
 	const [password, setPassword] = useState('');
+
+	const [alertVariant, setAlertVariant] = useState('');
 
 	const [alert, setAlert] = useState('');
 
@@ -13,16 +16,21 @@ function Login() {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		console.log(username);
+		console.log(userSelect);
 		console.log(password);
-		setAlert('Logged In successfully!');
+		if (userSelect === 'financialdepartment') {
+			setAlertVariant('success');
+			setAlert('Logged In successfully!');
+			<Redirect to='/financialDepartment/financialDepartmentConfirmPayment' />;
+		} else {
+			setAlertVariant('danger');
+			setAlert('Other Users have not yet been configured');
+		}
 	};
 
 	return (
 		<div>
-			<Button variant='primary' onClick={handleShow}>
-				admin
-			</Button>
+			<span onClick={handleShow}>Login</span>
 
 			<Modal show={show} animation={false} onHide={handleClose}>
 				<Modal.Header>
@@ -30,16 +38,28 @@ function Login() {
 				</Modal.Header>
 				<Form onSubmit={submitHandler}>
 					<Modal.Body>
-						<Form.Group controlId='username'>
-							<Form.Label>Username</Form.Label>
+						<Form.Group controlId='user-select'>
+							<Form.Label>User</Form.Label>
 							<Form.Control
+								as='select'
 								size='sm'
-								type='text'
-								value={username}
-								onChange={(e) => setUsername(e.target.value)}
+								name='userSelect'
+								value={userSelect}
 								required
-							/>
+								onChange={(e) => setUserSelect(e.target.value)}>
+								<option value='admin'>Admin</option>
+								<option value='financialdepartment'>
+									Financial Department
+								</option>
+								<option value='headofdepartment'>Head of Department</option>
+								<option value='financialdepartment'>
+									Financial Department
+								</option>
+								<option value='library'>Library</option>
+								<option value='registrar'>Registrar</option>
+							</Form.Control>
 						</Form.Group>
+
 						<Form.Group controlId='password'>
 							<Form.Label>Password</Form.Label>
 							<Form.Control
@@ -48,11 +68,12 @@ function Login() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								required
+								autoComplete='on'
 							/>
 						</Form.Group>
 						<br></br>
 						{alert === '' ? null : (
-							<Alert variant='success' style={{ textAlign: 'center' }}>
+							<Alert variant={alertVariant} style={{ textAlign: 'center' }}>
 								{alert}
 							</Alert>
 						)}
@@ -71,4 +92,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default UserLogin;

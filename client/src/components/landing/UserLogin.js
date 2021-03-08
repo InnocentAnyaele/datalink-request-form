@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Alert } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 function UserLogin() {
 	const [show, setShow] = useState(false);
@@ -14,19 +15,46 @@ function UserLogin() {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	const submitHandler = (e) => {
+	const [financialDepartmentAuth, setFinancialDepartmentAuth] = useState(false);
+	// const [adminAuth, setAdminAuth] = useState(false);
+
+	const submitHandler = async (e) => {
 		e.preventDefault();
+
 		console.log(userSelect);
 		console.log(password);
-		if (userSelect === 'financialdepartment') {
-			setAlertVariant('success');
-			setAlert('Logged In successfully!');
-			<Redirect to='/financialDepartment/financialDepartmentConfirmPayment' />;
-		} else {
-			setAlertVariant('danger');
-			setAlert('Other Users have not yet been configured');
-		}
+
+		await axios
+			.post('/user/login', {
+				username: userSelect,
+				password: password,
+			})
+			.then((res) => {
+				sessionStorage.setItem('token', res.data.token);
+				setAlertVariant('success');
+				setAlert('Logged in successfully');
+				setFinancialDepartmentAuth(res.data.auth);
+			})
+			.catch((err) => {
+				if (err.response.status === 400) {
+					setAlertVariant('danger');
+					setAlert('Wrong password');
+				}
+				if (err.response.status === 500) {
+					setAlertVariant('danger');
+					setAlert('Server error');
+				}
+				if (err.response.status === 404) {
+					setAlertVariant('danger');
+					setAlert('User does not exist');
+				}
+			});
 	};
+
+	if (financialDepartmentAuth)
+		return (
+			<Redirect to='/financialDepartment/financialDepartmentConfirmPayment' />
+		);
 
 	return (
 		<div>

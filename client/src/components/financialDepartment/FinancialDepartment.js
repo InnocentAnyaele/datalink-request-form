@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -29,7 +29,7 @@ import BuildIcon from '@material-ui/icons/Build';
 
 import './financialDepartment.css';
 
-import { Switch, Link, Route } from 'react-router-dom';
+import { Switch, Link, Route, Redirect } from 'react-router-dom';
 import ClearStudent from './clearStudent';
 import ConfirmPayment from './confirmPayment';
 import ChangePassword from './changePassword';
@@ -105,6 +105,10 @@ export default function FinancialDepartment() {
 
 	const studentRef = useRef(null);
 
+	useEffect(() => {
+		document.title = 'Financial Department';
+	});
+
 	const handleStudentMenu = () => {
 		setStudentMenu(!studentMenu);
 	};
@@ -129,7 +133,12 @@ export default function FinancialDepartment() {
 		setOpen(false);
 	};
 
-	const logout = () => {};
+	const logout = () => {
+		console.log('You have clicked the log out button');
+		sessionStorage.setItem('token', null);
+		sessionStorage.clear();
+		return <Redirect to='/' />;
+	};
 
 	return (
 		<div className={classes.root}>
@@ -138,7 +147,8 @@ export default function FinancialDepartment() {
 				position='fixed'
 				className={clsx(classes.appBar, {
 					[classes.appBarShift]: open,
-				})}>
+				})}
+				style={{ backgroundColor: '#4169E1' }}>
 				<Toolbar>
 					<IconButton
 						color='inherit'
@@ -151,7 +161,7 @@ export default function FinancialDepartment() {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant='h6' noWrap>
-						Financial Department
+						DataLink Request Forms
 					</Typography>
 				</Toolbar>
 			</AppBar>
@@ -174,6 +184,7 @@ export default function FinancialDepartment() {
 						) : (
 							<ChevronLeftIcon />
 						)}
+						<span style={{ fontSize: '20px' }}>Finanical department</span>
 					</IconButton>
 				</div>
 				<Divider />

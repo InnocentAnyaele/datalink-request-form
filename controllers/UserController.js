@@ -52,11 +52,11 @@ const login = (req, res, next) => {
 						auth: true,
 					});
 				} else {
-					res.status(404).send('Wrong password');
+					res.status(400).json({ message: 'Wrong password' });
 				}
 			});
 		} else {
-			res.status(404).send('User does not exist');
+			res.status(404).json({ message: 'User does not exist' });
 		}
 	});
 };

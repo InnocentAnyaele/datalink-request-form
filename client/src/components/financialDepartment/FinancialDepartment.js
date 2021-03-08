@@ -103,6 +103,8 @@ export default function FinancialDepartment() {
 	const [clearanceMenu, setClearanceMenu] = React.useState(false);
 	const [settingsMenu, setSettingsMenu] = React.useState(false);
 
+	const [logout, setLogout] = React.useState(false);
+
 	const studentRef = useRef(null);
 
 	useEffect(() => {
@@ -133,12 +135,15 @@ export default function FinancialDepartment() {
 		setOpen(false);
 	};
 
-	const logout = () => {
-		console.log('You have clicked the log out button');
+	const logoutHandler = () => {
+		setLogout(true);
+	};
+
+	if (logout) {
 		sessionStorage.setItem('token', null);
 		sessionStorage.clear();
 		return <Redirect to='/' />;
-	};
+	}
 
 	return (
 		<div className={classes.root}>
@@ -270,7 +275,10 @@ export default function FinancialDepartment() {
 								</ListItem>
 							</Link>
 
-							<ListItem button className={classes.nested} onClick={logout}>
+							<ListItem
+								button
+								className={classes.nested}
+								onClick={logoutHandler}>
 								<ListItemIcon>
 									<ExitToAppIcon />
 								</ListItemIcon>

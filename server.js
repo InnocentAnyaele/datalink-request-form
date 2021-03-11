@@ -5,6 +5,7 @@ const path = require('path');
 require('dotenv').config();
 
 const UserRoute = require('./routes/user');
+const StudentRequestRoute = require('./routes/studentRequest');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -26,6 +27,7 @@ connection.once('open', () => {
 });
 
 app.use('/user', UserRoute);
+app.use('/studentRequest', StudentRequestRoute);
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'));

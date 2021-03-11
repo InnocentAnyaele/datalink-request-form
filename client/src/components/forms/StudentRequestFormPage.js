@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Row, Col, Badge, Alert } from 'react-bootstrap';
 import './Form.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function StudentRequestFormPage() {
 	const [surname, setSurname] = useState('');
@@ -39,9 +40,32 @@ function StudentRequestFormPage() {
 	const [payable, setPayable] = useState(0);
 
 	const [alert, setAlert] = useState('');
+	const [alertVariant, setAlertVariant] = useState('');
+
+	const calculate = () => {
+		var amount =
+			attestation * 10 +
+			transcript * 30 +
+			internship * 0 +
+			authentication * 5 +
+			additional * 3 +
+			visa * 40 +
+			express * 60 +
+			general * 5 +
+			resident * 5 +
+			renewal * 5 +
+			bank * 0 +
+			project * 0 +
+			results * 5;
+
+		setPayable(amount);
+	};
 
 	const submitHandler = (e) => {
 		e.preventDefault();
+
+		// calculate();
+
 		console.log(surname);
 		console.log(otherNames);
 		console.log(id);
@@ -71,29 +95,67 @@ function StudentRequestFormPage() {
 		console.log('scholarshipCheck: ' + scholarshipCheck);
 		console.log('otherText: ' + otherText);
 		console.log('otherCopy: ' + other);
+		console.log('Payable: ' + payable);
+		console.log('Payment Reference: ' + payment);
+
+		axios
+			.post('/studentRequest/add', {
+				surname: surname,
+				otherNames: otherNames,
+				id: id,
+				level: level,
+				session: session,
+				program: program,
+				option: option,
+				contact: contact,
+				address: address,
+				attestation: attestation,
+				transcript: transcript,
+				internship: internship,
+				authentication: authentication,
+				visa: visa,
+				express: express,
+				general: general,
+				resident: resident,
+				renewal: renewal,
+				bank: bank,
+				project: project,
+				specifyProject: specifyProject,
+				results: results,
+				schoolCheck: schoolCheck,
+				schoolProgram: schoolProgram,
+				employmentCheck: employmentCheck,
+				scholarshipCheck: scholarshipCheck,
+				otherText: otherText,
+				other: other,
+				payable:
+					attestation * 10 +
+					transcript * 30 +
+					internship * 0 +
+					authentication * 5 +
+					additional * 3 +
+					visa * 40 +
+					express * 60 +
+					general * 5 +
+					resident * 5 +
+					renewal * 5 +
+					bank * 0 +
+					project * 0 +
+					results * 5,
+				payment: payment,
+			})
+			.then(() => {
+				setAlertVariant('success');
+				setAlert('Request Submitted');
+			})
+			.catch(() => {
+				setAlertVariant('danger');
+				setAlert('Could not submit reuqest. Try again later.');
+			});
 
 		setAlert(
 			"Request Submitted! You will be contacted once it's ready. Or visit the front desk with your ID within 5 working days ",
 		);
-	};
-
-	const calculate = () => {
-		var amount =
-			attestation * 10 +
-			transcript * 30 +
-			internship * 0 +
-			authentication * 5 +
-			additional * 3 +
-			visa * 40 +
-			express * 60 +
-			general * 5 +
-			resident * 5 +
-			renewal * 5 +
-			bank * 0 +
-			project * 0 +
-			results * 5;
-
-		setPayable(amount);
 	};
 
 	return (
@@ -517,6 +579,9 @@ function StudentRequestFormPage() {
 						placeholder='Reference ID'
 						required
 					/>
+					<p className='text-muted'>
+							Type in 'Free' or 0 if the calculated price is 0.
+						</p>
 				</Form.Group>
 				<hr></hr>
 				<Form.Group controlId='sign_group'>
@@ -545,7 +610,7 @@ function StudentRequestFormPage() {
 					<span>GH₵{payable}</span>
 				</Button>
 				<br></br>
-				{alert === '' ? null : <Alert variant='success'>{alert}</Alert>}
+				{alert === '' ? null : <Alert variant={alertVariant}>{alert}</Alert>}
 				<div
 					style={{
 						display: 'flex',

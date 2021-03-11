@@ -38,11 +38,9 @@ function Navigation() {
 				</NavDropdown.Item>
 			</NavDropdown> */}
 
-			<div className='ml-auto'>
-				<Button vairant='primary'>
-					<UserLogin />
-				</Button>
-			</div>
+			<Button className='ml-auto' vairant='primary'>
+				<UserLogin />
+			</Button>
 		</Navbar>
 	);
 }

@@ -60,7 +60,12 @@ function UserLogin() {
 		<div>
 			<span onClick={handleShow}>Login</span>
 
-			<Modal show={show} animation={false} onHide={handleClose}>
+			<Modal
+				show={show}
+				animation={false}
+				onHide={handleClose}
+				className='container-fluid'
+				centered>
 				<Modal.Header>
 					<h4 style={{ textAlign: 'center', fontWeight: 'bold' }}>Login</h4>
 				</Modal.Header>

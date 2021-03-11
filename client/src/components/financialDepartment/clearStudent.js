@@ -1,6 +1,6 @@
 import React from 'react';
 
-function clearStudent() {
+function ClearStudent() {
 	return (
 		<div>
 			<h1>This is the clear student page</h1>
@@ -8,4 +8,4 @@ function clearStudent() {
 	);
 }
 
-export default clearStudent;
+export default ClearStudent;

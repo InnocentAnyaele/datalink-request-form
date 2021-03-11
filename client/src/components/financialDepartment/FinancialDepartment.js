@@ -30,9 +30,9 @@ import BuildIcon from '@material-ui/icons/Build';
 import './financialDepartment.css';
 
 import { Switch, Link, Route, Redirect } from 'react-router-dom';
-import ClearStudent from './clearStudent';
-import ConfirmPayment from './confirmPayment';
-import ChangePassword from './changePassword';
+import ClearStudent from './ClearStudent';
+import ConfirmPayment from './ConfirmPayment';
+import ChangePassword from './ChangePassword';
 
 const drawerWidth = 240;
 

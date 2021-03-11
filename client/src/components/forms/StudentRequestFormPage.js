@@ -146,16 +146,14 @@ function StudentRequestFormPage() {
 			})
 			.then(() => {
 				setAlertVariant('success');
-				setAlert('Request Submitted');
+				setAlert(
+					"Request Submitted! You will be contacted once it's ready. Or visit the front desk with your ID within 5 working days",
+				);
 			})
 			.catch(() => {
 				setAlertVariant('danger');
 				setAlert('Could not submit reuqest. Try again later.');
 			});
-
-		setAlert(
-			"Request Submitted! You will be contacted once it's ready. Or visit the front desk with your ID within 5 working days ",
-		);
 	};
 
 	return (
@@ -580,8 +578,8 @@ function StudentRequestFormPage() {
 						required
 					/>
 					<p className='text-muted'>
-							Type in 'Free' or 0 if the calculated price is 0.
-						</p>
+						Type in 'Free' or 0 if the calculated price is 0.
+					</p>
 				</Form.Group>
 				<hr></hr>
 				<Form.Group controlId='sign_group'>

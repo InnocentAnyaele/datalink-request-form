@@ -18,7 +18,12 @@ function ViewClearanceModal(props) {
 				<VisibilityIcon />
 			</Button>
 
-			<Modal show={show} animation={false} onHide={handleClose} centered>
+			<Modal
+				show={show}
+				animation={false}
+				onHide={handleClose}
+				className='container-fluid m-5'
+				centered>
 				<Modal.Header>
 					<span style={{ textAlign: 'center', fontWeight: 'bold' }}>
 						{' '}

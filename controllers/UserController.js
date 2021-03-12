@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 
@@ -75,8 +75,13 @@ const changePassword = (req, res, next) => {
 	const bcrypt = require('bcrypt');
 
 	const password = req.body.password;
-	const username = 'financialdepartment';
+	// const username = 'financialdepartment';
 	const newpassword = req.body.newpassword;
+	const username = req.body.username;
+
+	console.log('username ' + username);
+	console.log('password ' + password);
+	console.log('newpassword ' + newpassword);
 
 	bycrypt.hash(newpassword, 10, function (err, hashedPass) {
 		if (err) {

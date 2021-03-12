@@ -1,7 +1,6 @@
 const User = require('../models/user');
-var bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const express = require('express');
+const bcrypt = require('bcrypt');
 
 const add = (req, res, next) => {
 	username = req.body.username;
@@ -72,18 +71,11 @@ const get = (req, res, next) => {
 };
 
 const changePassword = (req, res, next) => {
-	const bcrypt = require('bcrypt');
-
 	const password = req.body.password;
-	// const username = 'financialdepartment';
+	const username = 'financialdepartment';
 	const newpassword = req.body.newpassword;
-	const username = req.body.username;
 
-	console.log('username ' + username);
-	console.log('password ' + password);
-	console.log('newpassword ' + newpassword);
-
-	bycrypt.hash(newpassword, 10, function (err, hashedPass) {
+	bcrypt.hash(newpassword, 10, function (err, hashedPass) {
 		if (err) {
 			res.status(500).send(err);
 		}
@@ -94,7 +86,7 @@ const changePassword = (req, res, next) => {
 			User.findOne({ $or: [{ username: username }] })
 				.then((user) => {
 					if (user) {
-						bycrypt.compare(password, user.password, function (err, result) {
+						bcrypt.compare(password, user.password, function (err, result) {
 							if (err) {
 								res.status(400).send('cannot find a password match');
 							}
@@ -106,14 +98,14 @@ const changePassword = (req, res, next) => {
 										res.status(200).send('Password changed successfully');
 									})
 									.catch((err) => {
-										res.status(500).send('cannot change password');
+										res.status(400).send('cannot change password');
 									});
 							} else {
-								res.status(500).send('wrong password');
+								res.status(404).send('wrong password');
 							}
 						});
 					} else {
-						res.status(400).send('cannot find this user');
+						res.status(404).send('cannot find this user');
 					}
 				})
 				.catch((err) => {

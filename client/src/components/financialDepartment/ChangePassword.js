@@ -20,9 +20,16 @@ function ChangePassword() {
 				setAlertVariant('success');
 				setAlert('Password changed successfully');
 			})
-			.catch(() => {
-				setAlertVariant('danger');
-				setAlert('Server error. Try again later');
+			.catch((err) => {
+				if (err.response.status === 404) {
+					setAlertVariant('danger');
+					setAlert('Wrong user or password');
+				}
+				if (err.response.status === 500) {
+					setAlertVariant('danger');
+					setAlert('Server error');
+				}
+				
 			});
 	};
 

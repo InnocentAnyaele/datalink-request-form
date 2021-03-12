@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Badge, Alert } from 'react-bootstrap';
 import './Form.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function ClearanceRequestFormPage() {
 	const [name, setName] = useState('');
@@ -16,6 +17,7 @@ function ClearanceRequestFormPage() {
 	const [semester, setSemester] = useState('');
 
 	const [alert, setAlert] = useState('');
+	const [alertVariant, setAlertVariant] = useState('');
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -29,18 +31,30 @@ function ClearanceRequestFormPage() {
 		console.log(year);
 		console.log(level);
 		console.log(semester);
-		// console.log(programSelect);
-		// console.log(levelSelect);
-		// console.log(deferFrom);
-		// console.log(deferTo);
-		// console.log(reason);
-		// console.log(semesterSelect);
-		// console.log(sessionSelect);
-		// console.log(campusSelect);
 
-		setAlert(
-			"Request Submitted! You will be contacted once it's ready. Or visit the front desk with your ID within 5 working days ",
-		);
+		axios
+			.post('/clearance/add', {
+				name: name,
+				id: id,
+				program: program,
+				option: option,
+				campus: campus,
+				contact: contact,
+				session: session,
+				year: year,
+				level: level,
+				semester: semester,
+			})
+			.then(() => {
+				setAlertVariant('success');
+				setAlert(
+					"Request Submitted! You will be contacted once it's ready. Or visit the front desk with your ID within 5 working days ",
+				);
+			})
+			.catch(() => {
+				setAlertVariant('danger');
+				setAlert('Could not submit request. Try again later. ');
+			});
 	};
 	return (
 		<div style={{ margin: '50px' }}>
@@ -129,7 +143,7 @@ function ClearanceRequestFormPage() {
 					/>
 				</Form.Group>
 				<Form.Group controlId='year'>
-					<Form.Label>Year </Form.Label>
+					<Form.Label>Academic Year </Form.Label>
 					<Form.Control
 						size='sm'
 						type='text'
@@ -173,13 +187,14 @@ function ClearanceRequestFormPage() {
 					/>
 				</Form.Group>
 				<br></br>
-				{alert === '' ? null : <Alert variant='success'>{alert}</Alert>}
+				{alert === '' ? null : <Alert variant={alertVariant}>{alert}</Alert>}
 				<div
 					style={{
 						display: 'flex',
 						flexDirection: 'row',
 						justifyContent: 'space-between',
-					}}>
+					}}
+					className='pb-3'>
 					<div>
 						<Link to='/'>
 							<Button variant='secondary'>Return</Button>

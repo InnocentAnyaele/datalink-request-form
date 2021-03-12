@@ -61,57 +61,66 @@ const login = (req, res, next) => {
 	});
 };
 
-// const changePassword = (req, res, next) => {
-// 	const password = req.body.password;
-// 	const username = req.body.username;
-// 	const newpassword = req.body.newpassword;
+const get = (req, res, next) => {
+	User.find()
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
 
-// 	console.log('username: ' + username);
-// 	console.log('password: ' + password);
-// 	console.log('newpassword: ' + newpassword);
+const changePassword = (req, res, next) => {
+	const bcrypt = require('bcrypt');
 
-// 	bycrypt.hash(newpassword, 10, function (err, hashedPass) {
-// 		if (err) {
-// 			res.status(500).send(err);
-// 		}
+	const password = req.body.password;
+	const username = 'financialdepartment';
+	const newpassword = req.body.newpassword;
 
-// 		if (hashedPass) {
-// 			const hashedPassword = hashedPass;
+	bycrypt.hash(newpassword, 10, function (err, hashedPass) {
+		if (err) {
+			res.status(500).send(err);
+		}
 
-// 			User.findOne({ $or: [{ username: username }] })
-// 				.then((user) => {
-// 					if (user) {
-// 						bycrypt.compare(password, user.password, function (err, result) {
-// 							if (err) {
-// 								res.status(400).send('cannot find a password match');
-// 							}
-// 							if (result) {
-// 								user.password = hashedPassword;
-// 								user
-// 									.save()
-// 									.then((result) => {
-// 										res.status(200).send('Password changed successfully');
-// 									})
-// 									.catch((err) => {
-// 										res.status(500).send('cannot change password');
-// 									});
-// 							} else {
-// 								res.status(500).send('wrong password');
-// 							}
-// 						});
-// 					} else {
-// 						res.status(400).send('cannot find this user');
-// 					}
-// 				})
-// 				.catch((err) => {
-// 					res.status(500).send('server error');
-// 				});
-// 		}
-// 	});
-// };
+		if (hashedPass) {
+			const hashedPassword = hashedPass;
+
+			User.findOne({ $or: [{ username: username }] })
+				.then((user) => {
+					if (user) {
+						bycrypt.compare(password, user.password, function (err, result) {
+							if (err) {
+								res.status(400).send('cannot find a password match');
+							}
+							if (result) {
+								user.password = hashedPassword;
+								user
+									.save()
+									.then((result) => {
+										res.status(200).send('Password changed successfully');
+									})
+									.catch((err) => {
+										res.status(500).send('cannot change password');
+									});
+							} else {
+								res.status(500).send('wrong password');
+							}
+						});
+					} else {
+						res.status(400).send('cannot find this user');
+					}
+				})
+				.catch((err) => {
+					res.status(500).send('server error');
+				});
+		}
+	});
+};
 
 module.exports = {
 	add,
 	login,
-	// changePassword,
+	get,
+	changePassword,
 };

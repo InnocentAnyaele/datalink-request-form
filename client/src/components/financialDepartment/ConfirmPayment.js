@@ -59,7 +59,7 @@ function ConfirmPayment() {
 	}
 
 	return (
-		<div>
+		<>
 			<h1 className='text-muted' style={{ fontSize: '20px' }}>
 				Confirm Student Payment Page
 			</h1>
@@ -67,8 +67,13 @@ function ConfirmPayment() {
 			<Search query={query} onChange={handleQueryRequest} />
 			{alert === '' ? null : <Alert variant={alertVariant}>{alert}</Alert>}
 			{loading ? (
-				<div>
-					<Spinner animation='border' variant='primary' size='lg' />
+				<div className='p-5'>
+					<Spinner
+						style={{ margin: '0 auto', marginLeft: '50%' }}
+						animation='border'
+						variant='primary'
+						size='lg'
+					/>
 				</div>
 			) : (
 				<Table striped hover borderless>
@@ -111,7 +116,7 @@ function ConfirmPayment() {
 					</tbody>
 				</Table>
 			)}
-		</div>
+		</>
 	);
 }
 

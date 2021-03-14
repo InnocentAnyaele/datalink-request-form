@@ -22,7 +22,7 @@ function ViewClearanceModal(props) {
 				show={show}
 				animation={false}
 				onHide={handleClose}
-				className='container-fluid m-5'
+				className='container-fluid m-4'
 				centered>
 				<Modal.Header>
 					<span style={{ textAlign: 'center', fontWeight: 'bold' }}>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './financialDepartment.css';
-import { Alert, Spinner, Table, Badge } from 'react-bootstrap';
+import { Alert, Table, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import Search from '../Search';
 import DeleteStudentRequest from './DeleteStudentRequest';
 import PaymentConfirmation from './PaymentConfirmation';
+import { Spin } from 'antd';
 
 function ConfirmPayment() {
 	const [items, setItems] = useState([]);
@@ -68,15 +69,16 @@ function ConfirmPayment() {
 			{alert === '' ? null : <Alert variant={alertVariant}>{alert}</Alert>}
 			{loading ? (
 				<div className='p-5'>
-					<Spinner
+					{/* <Spinner
 						style={{ margin: '0 auto', marginLeft: '50%' }}
 						animation='border'
 						variant='primary'
 						size='lg'
-					/>
+					/> */}
+					<Spin size='large' style={{ margin: '0 auto', marginLeft: '50%' }} />
 				</div>
 			) : (
-				<Table striped hover borderless>
+				<Table striped hover borderless className='container-fluid'>
 					<thead>
 						<tr>
 							<th>Student</th>

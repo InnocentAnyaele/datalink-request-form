@@ -36,7 +36,12 @@ function ClearStudentModal(props) {
 				Clear
 			</Button>
 
-			<Modal show={show} animation={false} onHide={handleClose} centered className='container-fluid m-5'>
+			<Modal
+				show={show}
+				animation={false}
+				onHide={handleClose}
+				centered
+				className='container-fluid m-4'>
 				<Modal.Header>
 					<h4 style={{ textAlign: 'center', fontWeight: 'bold' }}>
 						{' '}

@@ -7,6 +7,7 @@ import DefermentRequestFormPage from './components/forms/DefermentRequestFormPag
 import TransferRequestFormPage from './components/forms/TransferRequestFormPage';
 import ClearanceRequestFormPage from './components/forms/ClearanceRequestFormPage';
 import FinancialDepartment from './components/financialDepartment/FinancialDepartment';
+import HeadOfDepartment from './components/headOfDepartment/HeadOfDepartment';
 
 function App() {
 	return (
@@ -30,6 +31,7 @@ function App() {
 					component={ClearanceRequestFormPage}
 				/>
 				<Route path='/financialDepartment' component={FinancialDepartment} />
+				<Route path='/headOfDepartment' component={HeadOfDepartment} />
 			</Switch>
 		</Router>
 	);

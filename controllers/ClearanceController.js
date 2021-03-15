@@ -59,9 +59,33 @@ const getClearanceFinancialDepartment = (req, res, next) => {
 		});
 };
 
+const getClearanceHeadOfDepartment = (req, res, next) => {
+	Clearance.find({ headofdepartment: false })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+};
+
 const searchClearanceFinancialDepartment = (req, res, next) => {
 	Clearance.find({
 		$and: [{ id: { $regex: req.params.id } }, { financialdepartment: false }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const searchClearanceHeadOfDepartment = (req, res, next) => {
+	Clearance.find({
+		$and: [{ id: { $regex: req.params.id } }, { headofdepartment: false }],
 	})
 		.sort({ createdAt: -1 })
 		.then((data) => {
@@ -91,6 +115,25 @@ const confirmFinancialDepartment = (req, res, next) => {
 		});
 };
 
+const confirmHeadOfDepartment = (req, res, next) => {
+	Clearance.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.headofdepartment = true;
+			request.headofdepartmentofficer = req.body.officer;
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Head of Department Cleared');
+				})
+				.catch(() => {
+					res.status(200).send("Can't clear head of department");
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
 module.exports = {
 	addClearance,
 	getClearance,
@@ -98,4 +141,7 @@ module.exports = {
 	searchClearanceFinancialDepartment,
 	confirmFinancialDepartment,
 	deleteClearance,
+	getClearanceHeadOfDepartment,
+	searchClearanceHeadOfDepartment,
+	confirmHeadOfDepartment,
 };

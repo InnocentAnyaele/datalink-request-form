@@ -72,7 +72,7 @@ const get = (req, res, next) => {
 
 const changePassword = (req, res, next) => {
 	const password = req.body.password;
-	const username = 'financialdepartment';
+	const username = req.body.username;
 	const newpassword = req.body.newpassword;
 
 	bcrypt.hash(newpassword, 10, function (err, hashedPass) {

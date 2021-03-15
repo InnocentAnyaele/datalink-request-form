@@ -18,5 +18,17 @@ router.patch(
 	'/confirmFinancialDepartment/:id',
 	ClearanceController.confirmFinancialDepartment,
 );
+router.patch(
+	'/confirmHeadOfDepartment/:id',
+	ClearanceController.confirmHeadOfDepartment,
+);
+router.get(
+	'/getHeadOfDepartment',
+	ClearanceController.getClearanceHeadOfDepartment,
+);
+router.get(
+	'/searchHeadOfDepartment/:id',
+	ClearanceController.searchClearanceHeadOfDepartment,
+);
 
 module.exports = router;

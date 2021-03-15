@@ -17,6 +17,7 @@ function UserLogin() {
 
 	const [financialDepartmentAuth, setFinancialDepartmentAuth] = useState(false);
 	// const [adminAuth, setAdminAuth] = useState(false);
+	const [headOfDepartmentAuth, setHeadOfDepartmentAuth] = useState(false);
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
@@ -33,7 +34,12 @@ function UserLogin() {
 				sessionStorage.setItem('token', res.data.token);
 				setAlertVariant('success');
 				setAlert('Logged in successfully');
-				setFinancialDepartmentAuth(res.data.auth);
+				if (userSelect === 'financialdepartment') {
+					setFinancialDepartmentAuth(res.data.auth);
+				}
+				if (userSelect === 'headofdepartment') {
+					setHeadOfDepartmentAuth(res.data.auth);
+				}
 			})
 			.catch((err) => {
 				if (err.response.status === 400) {
@@ -55,6 +61,10 @@ function UserLogin() {
 		return (
 			<Redirect to='/financialDepartment/financialDepartmentConfirmPayment' />
 		);
+
+	if (headOfDepartmentAuth) {
+		return <Redirect to='/headOfDepartment/headOfDepartmentClearStudent' />;
+	}
 
 	return (
 		<div>
@@ -80,9 +90,6 @@ function UserLogin() {
 									Financial Department
 								</option>
 								<option value='headofdepartment'>Head of Department</option>
-								<option value='financialdepartment'>
-									Financial Department
-								</option>
 								<option value='library'>Library</option>
 								<option value='registrar'>Registrar</option>
 							</Form.Control>

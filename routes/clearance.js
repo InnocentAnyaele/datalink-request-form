@@ -30,5 +30,8 @@ router.get(
 	'/searchHeadOfDepartment/:id',
 	ClearanceController.searchClearanceHeadOfDepartment,
 );
+router.get('/getLibrary', ClearanceController.getClearanceLibrary);
+router.get('/searchLibrary/:id', ClearanceController.searchClearanceLibrary);
+router.patch('/confirmLibrary/:id', ClearanceController.confirmLibrary);
 
 module.exports = router;

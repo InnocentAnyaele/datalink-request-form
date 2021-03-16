@@ -18,6 +18,7 @@ function UserLogin() {
 	const [financialDepartmentAuth, setFinancialDepartmentAuth] = useState(false);
 	// const [adminAuth, setAdminAuth] = useState(false);
 	const [headOfDepartmentAuth, setHeadOfDepartmentAuth] = useState(false);
+	const [libraryAuth, setLibraryAuth] = useState(false);
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
@@ -39,6 +40,9 @@ function UserLogin() {
 				}
 				if (userSelect === 'headofdepartment') {
 					setHeadOfDepartmentAuth(res.data.auth);
+				}
+				if (userSelect === 'library') {
+					setLibraryAuth(res.data.auth);
 				}
 			})
 			.catch((err) => {
@@ -64,6 +68,9 @@ function UserLogin() {
 
 	if (headOfDepartmentAuth) {
 		return <Redirect to='/headOfDepartment/headOfDepartmentClearStudent' />;
+	}
+	if (libraryAuth) {
+		return <Redirect to='/library/libraryClearStudent' />;
 	}
 
 	return (

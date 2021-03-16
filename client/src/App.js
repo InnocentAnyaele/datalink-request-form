@@ -8,6 +8,7 @@ import TransferRequestFormPage from './components/forms/TransferRequestFormPage'
 import ClearanceRequestFormPage from './components/forms/ClearanceRequestFormPage';
 import FinancialDepartment from './components/financialDepartment/FinancialDepartment';
 import HeadOfDepartment from './components/headOfDepartment/HeadOfDepartment';
+import Library from './components/library/Library';
 
 function App() {
 	return (
@@ -32,6 +33,7 @@ function App() {
 				/>
 				<Route path='/financialDepartment' component={FinancialDepartment} />
 				<Route path='/headOfDepartment' component={HeadOfDepartment} />
+				<Route path='/library' component={Library} />
 			</Switch>
 		</Router>
 	);

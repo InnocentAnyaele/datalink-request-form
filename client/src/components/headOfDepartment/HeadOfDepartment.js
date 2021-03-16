@@ -144,135 +144,139 @@ export default function HeadOfDepartment() {
 		return <Redirect to='/' />;
 	}
 
-	return (
-		<div className={classes.root}>
-			<CssBaseline />
-			<AppBar
-				position='fixed'
-				className={clsx(classes.appBar, {
-					[classes.appBarShift]: open,
-				})}
-				style={{ backgroundColor: '#4169E1' }}>
-				<Toolbar>
-					<IconButton
-						color='inherit'
-						aria-label='open drawer'
-						onClick={handleDrawerOpen}
-						edge='start'
-						className={clsx(classes.menuButton, {
-							[classes.hide]: open,
-						})}>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant='h6' noWrap>
-						DataLink Request Forms
-					</Typography>
-				</Toolbar>
-			</AppBar>
-			<Drawer
-				variant='permanent'
-				className={clsx(classes.drawer, {
-					[classes.drawerOpen]: open,
-					[classes.drawerClose]: !open,
-				})}
-				classes={{
-					paper: clsx({
+	if (sessionStorage.getItem('token') !== null) {
+		return (
+			<div className={classes.root}>
+				<CssBaseline />
+				<AppBar
+					position='fixed'
+					className={clsx(classes.appBar, {
+						[classes.appBarShift]: open,
+					})}
+					style={{ backgroundColor: '#4169E1' }}>
+					<Toolbar>
+						<IconButton
+							color='inherit'
+							aria-label='open drawer'
+							onClick={handleDrawerOpen}
+							edge='start'
+							className={clsx(classes.menuButton, {
+								[classes.hide]: open,
+							})}>
+							<MenuIcon />
+						</IconButton>
+						<Typography variant='h6' noWrap>
+							DataLink Request Forms
+						</Typography>
+					</Toolbar>
+				</AppBar>
+				<Drawer
+					variant='permanent'
+					className={clsx(classes.drawer, {
 						[classes.drawerOpen]: open,
 						[classes.drawerClose]: !open,
-					}),
-				}}>
-				<div className={classes.toolbar}>
-					<IconButton onClick={handleDrawerClose}>
-						{theme.direction === 'rtl' ? (
-							<ChevronRightIcon />
-						) : (
-							<ChevronLeftIcon />
-						)}
-						<span style={{ fontSize: '20px' }}>Head of Department</span>
-					</IconButton>
-				</div>
-				<Divider />
+					})}
+					classes={{
+						paper: clsx({
+							[classes.drawerOpen]: open,
+							[classes.drawerClose]: !open,
+						}),
+					}}>
+					<div className={classes.toolbar}>
+						<IconButton onClick={handleDrawerClose}>
+							{theme.direction === 'rtl' ? (
+								<ChevronRightIcon />
+							) : (
+								<ChevronLeftIcon />
+							)}
+							<span style={{ fontSize: '20px' }}>Head of Department</span>
+						</IconButton>
+					</div>
+					<Divider />
 
-				<List>
-					<ListItem button onClick={handleClearanceMenu}>
-						<ListItemIcon>
-							<DnsIcon />
-						</ListItemIcon>
-						<ListItemText primary={'Clearance'} />
-						{clearanceMenu ? <ExpandLess /> : <ExpandMore />}
-					</ListItem>
+					<List>
+						<ListItem button onClick={handleClearanceMenu}>
+							<ListItemIcon>
+								<DnsIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Clearance'} />
+							{clearanceMenu ? <ExpandLess /> : <ExpandMore />}
+						</ListItem>
 
-					<Collapse in={clearanceMenu} timeout='auto' unmountOnExit>
-						<List
-							component='div'
-							disablePadding
-							style={{ paddingLeft: '10px' }}>
-							<Link
-								to='/headOfDepartment/headOfDepartmentClearStudent'
-								style={{ textDecoration: 'none', color: 'black' }}>
-								<ListItem button className={classes.nested}>
+						<Collapse in={clearanceMenu} timeout='auto' unmountOnExit>
+							<List
+								component='div'
+								disablePadding
+								style={{ paddingLeft: '10px' }}>
+								<Link
+									to='/headOfDepartment/headOfDepartmentClearStudent'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<AssignmentTurnedInIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Clear Student'} />
+									</ListItem>
+								</Link>
+							</List>
+						</Collapse>
+
+						<ListItem button onClick={handleSettingsMenu}>
+							<ListItemIcon>
+								<SettingsIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Settings'} />
+							{settingsMenu ? <ExpandLess /> : <ExpandMore />}
+						</ListItem>
+
+						<Collapse in={settingsMenu} timeout='auto' unmountOnExit>
+							<List
+								component='div'
+								disablePadding
+								style={{ paddingLeft: '10px' }}>
+								<Link
+									to='/headOfDepartment/headOfDepartmentChangePassword'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<BuildIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Change Password'} />
+									</ListItem>
+								</Link>
+
+								<ListItem
+									button
+									className={classes.nested}
+									onClick={logoutHandler}>
 									<ListItemIcon>
-										<AssignmentTurnedInIcon />
+										<ExitToAppIcon />
 									</ListItemIcon>
-									<ListItemText primary={'Clear Student'} />
+									<ListItemText primary={'Logout'} />
 								</ListItem>
-							</Link>
-						</List>
-					</Collapse>
+							</List>
+						</Collapse>
+					</List>
+				</Drawer>
 
-					<ListItem button onClick={handleSettingsMenu}>
-						<ListItemIcon>
-							<SettingsIcon />
-						</ListItemIcon>
-						<ListItemText primary={'Settings'} />
-						{settingsMenu ? <ExpandLess /> : <ExpandMore />}
-					</ListItem>
-
-					<Collapse in={settingsMenu} timeout='auto' unmountOnExit>
-						<List
-							component='div'
-							disablePadding
-							style={{ paddingLeft: '10px' }}>
-							<Link
-								to='/headOfDepartment/headOfDepartmentChangePassword'
-								style={{ textDecoration: 'none', color: 'black' }}>
-								<ListItem button className={classes.nested}>
-									<ListItemIcon>
-										<BuildIcon />
-									</ListItemIcon>
-									<ListItemText primary={'Change Password'} />
-								</ListItem>
-							</Link>
-
-							<ListItem
-								button
-								className={classes.nested}
-								onClick={logoutHandler}>
-								<ListItemIcon>
-									<ExitToAppIcon />
-								</ListItemIcon>
-								<ListItemText primary={'Logout'} />
-							</ListItem>
-						</List>
-					</Collapse>
-				</List>
-			</Drawer>
-
-			<main className={classes.content}>
-				<div className={classes.toolbar} />
-				<Switch>
-					<Route
-						exact
-						path='/headOfDepartment/headOfDepartmentClearStudent'
-						component={ClearStudent}
-					/>
-					<Route
-						exact
-						path='/headOfDepartment/headOfDepartmentChangePassword'
-						component={ChangePassword}
-					/>
-				</Switch>
-			</main>
-		</div>
-	);
+				<main className={classes.content}>
+					<div className={classes.toolbar} />
+					<Switch>
+						<Route
+							exact
+							path='/headOfDepartment/headOfDepartmentClearStudent'
+							component={ClearStudent}
+						/>
+						<Route
+							exact
+							path='/headOfDepartment/headOfDepartmentChangePassword'
+							component={ChangePassword}
+						/>
+					</Switch>
+				</main>
+			</div>
+		);
+	} else {
+		return <Redirect to={'/'} />;
+	}
 }

@@ -48,6 +48,41 @@ const getClearance = (req, res, next) => {
 		});
 };
 
+getClearanceTrue = (req, res, next) => {
+	Clearance.find({
+		$and: [
+			{ financialdepartment: true },
+			{ headofdepartment: true },
+			{ library: true },
+		],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const searchClearanceTrue = (req, res, next) => {
+	Clearance.find({
+		$and: [
+			{ id: { $regex: req.params.id } },
+			{ financialdepartment: true },
+			{ headofdepartment: true },
+			{ library: true },
+		],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
 const getClearanceFinancialDepartment = (req, res, next) => {
 	Clearance.find({ financialdepartment: false })
 		.sort({ createdAt: -1 })
@@ -131,7 +166,7 @@ const confirmFinancialDepartment = (req, res, next) => {
 					res.status(200).send('Finanicial department Cleared');
 				})
 				.catch(() => {
-					res.status(200).send("Can't clear financial department");
+					res.status(400).send("Can't clear financial department");
 				});
 		})
 		.catch((err) => {
@@ -150,7 +185,7 @@ const confirmHeadOfDepartment = (req, res, next) => {
 					res.status(200).send('Head of Department Cleared');
 				})
 				.catch(() => {
-					res.status(200).send("Can't clear head of department");
+					res.status(400).send("Can't clear head of department");
 				});
 		})
 		.catch((err) => {
@@ -169,7 +204,7 @@ const confirmLibrary = (req, res, next) => {
 					res.status(200).send('Library Cleared');
 				})
 				.catch(() => {
-					res.status(200).send("Can't clear Library");
+					res.status(400).send("Can't clear Library");
 				});
 		})
 		.catch((err) => {
@@ -190,4 +225,6 @@ module.exports = {
 	getClearanceLibrary,
 	searchClearanceLibrary,
 	confirmLibrary,
+	searchClearanceTrue,
+	getClearanceTrue,
 };

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Badge, Alert } from 'react-bootstrap';
 import './Form.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function TransferRequestFormPage() {
 	const [name, setName] = useState('');
@@ -19,6 +20,7 @@ function TransferRequestFormPage() {
 	const [reason, setReason] = useState('');
 
 	const [alert, setAlert] = useState('');
+	const [alertVariant, setAlertVariant] = useState('');
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -37,9 +39,33 @@ function TransferRequestFormPage() {
 		console.log(sessionSelect);
 		console.log(campusSelect);
 
-		setAlert(
-			"Request Submitted! You will be contacted once it's ready. Or visit the front desk with your ID within 5 working days ",
-		);
+		axios
+			.post('/transfer/add', {
+				name: name,
+				id: id,
+				program: program,
+				programSelect: programSelect,
+				year: year,
+				contact: contact,
+				level: levelSelect,
+				from: transferFrom,
+				to: transferTo,
+				semester: semesterSelect,
+				session: sessionSelect,
+				campus: campusSelect,
+				reason: reason,
+			})
+
+			.then(() => {
+				setAlertVariant('success');
+				setAlert(
+					"Request Submitted! You will be contacted once it's ready. Or visit the front desk with your ID within 5 working days ",
+				);
+			})
+			.catch(() => {
+				setAlertVariant('danger');
+				setAlert('Could not submit reuqest. Try again later.');
+			});
 	};
 
 	return (
@@ -201,7 +227,7 @@ function TransferRequestFormPage() {
 				</Form.Group>
 				<hr></hr>
 				<Form.Group controlId='reason'>
-					<Form.Label>Reason for Deferment</Form.Label>
+					<Form.Label>Reason for Transfer</Form.Label>
 					<Form.Control
 						as='textarea'
 						rows={3}
@@ -222,7 +248,7 @@ function TransferRequestFormPage() {
 					/>
 				</Form.Group>
 				<br></br>
-				{alert === '' ? null : <Alert variant='success'>{alert}</Alert>}
+				{alert === '' ? null : <Alert variant={alertVariant}>{alert}</Alert>}
 				<div
 					style={{
 						display: 'flex',

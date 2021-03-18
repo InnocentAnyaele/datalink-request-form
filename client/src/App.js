@@ -9,6 +9,7 @@ import ClearanceRequestFormPage from './components/forms/ClearanceRequestFormPag
 import FinancialDepartment from './components/financialDepartment/FinancialDepartment';
 import HeadOfDepartment from './components/headOfDepartment/HeadOfDepartment';
 import Library from './components/library/Library';
+import Registrar from './components/registrar/Registrar';
 
 function App() {
 	return (
@@ -34,6 +35,7 @@ function App() {
 				<Route path='/financialDepartment' component={FinancialDepartment} />
 				<Route path='/headOfDepartment' component={HeadOfDepartment} />
 				<Route path='/library' component={Library} />
+				<Route path='/registrar' component={Registrar} />
 			</Switch>
 		</Router>
 	);

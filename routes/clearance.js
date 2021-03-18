@@ -33,5 +33,7 @@ router.get(
 router.get('/getLibrary', ClearanceController.getClearanceLibrary);
 router.get('/searchLibrary/:id', ClearanceController.searchClearanceLibrary);
 router.patch('/confirmLibrary/:id', ClearanceController.confirmLibrary);
+router.get('/searchClearanceTrue/:id', ClearanceController.searchClearanceTrue);
+router.get('/getClearanceTrue', ClearanceController.getClearanceTrue);
 
 module.exports = router;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Badge, Alert } from 'react-bootstrap';
 import './Form.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function DefermentRequestForm() {
 	const [name, setName] = useState('');
@@ -19,6 +20,7 @@ function DefermentRequestForm() {
 	const [campusSelect, setCampusSelect] = useState('Tema');
 
 	const [alert, setAlert] = useState('');
+	const [alertVariant, setAlertVariant] = useState('');
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -36,9 +38,33 @@ function DefermentRequestForm() {
 		console.log(sessionSelect);
 		console.log(campusSelect);
 
-		setAlert(
-			"Request Submitted! You will be contacted once it's ready. Or visit the front desk with your ID within 5 working days ",
-		);
+		axios
+			.post('/deferment/add', {
+				name: name,
+				id: id,
+				program: program,
+				programSelect: programSelect,
+				year: year,
+				contact: contact,
+				level: levelSelect,
+				from: deferFrom,
+				to: deferTo,
+				semester: semesterSelect,
+				session: sessionSelect,
+				campus: campusSelect,
+				reason: reason,
+			})
+
+			.then(() => {
+				setAlertVariant('success');
+				setAlert(
+					"Request Submitted! You will be contacted once it's ready. Or visit the front desk with your ID within 5 working days ",
+				);
+			})
+			.catch(() => {
+				setAlertVariant('danger');
+				setAlert('Could not submit reuqest. Try again later.');
+			});
 	};
 
 	return (
@@ -222,7 +248,7 @@ function DefermentRequestForm() {
 					/>
 				</Form.Group>
 				<br></br>
-				{alert === '' ? null : <Alert variant='success'>{alert}</Alert>}
+				{alert === '' ? null : <Alert variant={alertVariant}>{alert}</Alert>}
 				<div
 					style={{
 						display: 'flex',

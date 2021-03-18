@@ -19,6 +19,7 @@ function UserLogin() {
 	// const [adminAuth, setAdminAuth] = useState(false);
 	const [headOfDepartmentAuth, setHeadOfDepartmentAuth] = useState(false);
 	const [libraryAuth, setLibraryAuth] = useState(false);
+	const [registrarAuth, setRegistrarAuth] = useState(false);
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
@@ -43,6 +44,9 @@ function UserLogin() {
 				}
 				if (userSelect === 'library') {
 					setLibraryAuth(res.data.auth);
+				}
+				if (userSelect === 'registrar') {
+					setRegistrarAuth(res.data.auth);
 				}
 			})
 			.catch((err) => {
@@ -71,6 +75,9 @@ function UserLogin() {
 	}
 	if (libraryAuth) {
 		return <Redirect to='/library/libraryClearStudent' />;
+	}
+	if (registrarAuth) {
+		return <Redirect to='/registrar/registrarApproveTransfer'/>;
 	}
 
 	return (

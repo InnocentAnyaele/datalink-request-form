@@ -48,6 +48,30 @@ const getClearance = (req, res, next) => {
 		});
 };
 
+const getClearancePending = (req, res, next) => {
+	Clearance.find({ status: 'pending' })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+};
+
+const searchClearancePending = (req, res, next) => {
+	Clearance.find({
+		status: 'pending',
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
 getClearanceTrue = (req, res, next) => {
 	Clearance.find({
 		$and: [
@@ -73,6 +97,19 @@ const searchClearanceTrue = (req, res, next) => {
 			{ headofdepartment: true },
 			{ library: true },
 		],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const searchClearance = (req, res, next) => {
+	Clearance.find({
+		id: { $regex: req.params.id },
 	})
 		.sort({ createdAt: -1 })
 		.then((data) => {
@@ -212,6 +249,90 @@ const confirmLibrary = (req, res, next) => {
 		});
 };
 
+const completeClearance = (req, res, next) => {
+	Clearance.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.status = 'completed';
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Clearance completed');
+				})
+				.catch(() => {
+					res.status(400).send("Can't complete clearance");
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const getCompleteClearance = (req, res, next) => {
+	Clearance.find({ status: 'completed' })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+};
+
+const searchCompleteClearance = (req, res, next) => {
+	Clearance.find({
+		$and: [{ id: { $regex: req.params.id } }, { status: 'completed' }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const pickedClearance = (req, res, next) => {
+	Clearance.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.status = 'picked';
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Clearance completed');
+				})
+				.catch(() => {
+					res.status(400).send("Can't complete clearance");
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const getPickedClearance = (req, res, next) => {
+	Clearance.find({ status: 'picked' })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+};
+
+const searchPickedClearance = (req, res, next) => {
+	Clearance.find({
+		$and: [{ id: { $regex: req.params.id } }, { status: 'completed' }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
 module.exports = {
 	addClearance,
 	getClearance,
@@ -227,4 +348,13 @@ module.exports = {
 	confirmLibrary,
 	searchClearanceTrue,
 	getClearanceTrue,
+	searchClearance,
+	completeClearance,
+	getCompleteClearance,
+	searchCompleteClearance,
+	pickedClearance,
+	getPickedClearance,
+	searchPickedClearance,
+	getClearancePending,
+	searchClearancePending,
 };

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './Registrar.css';
 import { Alert, Table, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import Search from '../Search';
 import { Spin } from 'antd';
 
-import ViewTransferModal from './ViewTransferModal';
-import DeleteTransfer from './DeleteTransfer';
-import TransferApproval from './TransferApproval';
+// import PickedClearance from './PickedClearance';
+import DeleteClearance from '../financialDepartment/DeleteClearance';
+import ViewClearanceModal from './ViewClearanceModal';
 
-function ApproveTransfer() {
+function ClearancePicked() {
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [query, setQuery] = useState('');
@@ -18,13 +17,13 @@ function ApproveTransfer() {
 
 	useEffect(() => {
 		if (query !== '') {
-			axios.get(`/transfer/searchTransferFalse/${query}`).then((res) => {
+			axios.get(`/clearance/searchPickedClearance/${query}`).then((res) => {
 				setItems(res.data);
 				setLoading(false);
 			});
 		} else {
 			axios
-				.get(`/transfer/getTransferFalse`)
+				.get('/clearance/getPickedClearance')
 				.then((res) => {
 					setItems(res.data);
 					setLoading(false);
@@ -51,20 +50,20 @@ function ApproveTransfer() {
 		setAlert('Server error. Try again later');
 	};
 
-	const approveHandlerSuccess = () => {
-		setAlertVariant('success');
-		setAlert('Request Approved by Registrar');
-	};
+	// const statusHandlerSuccess = () => {
+	// 	setAlertVariant('success');
+	// 	setAlert('Status Changed');
+	// };
 
-	const approveHandlerError = () => {
-		setAlertVariant('danger');
-		setAlert('Server error. Try again later');
-	};
+	// const statusHandlerError = () => {
+	// 	setAlertVariant('danger');
+	// 	setAlert('Server error. Try again later');
+	// };
 
 	return (
 		<>
 			<h1 className='text-muted' style={{ fontSize: '20px' }}>
-				Approve Transfer Page
+				Picked up Clearance Request
 			</h1>
 			<hr></hr>
 			<Search query={query} onChange={handleQueryRequest} />
@@ -72,11 +71,11 @@ function ApproveTransfer() {
 			{loading ? (
 				<div className='p-5'>
 					{/* <Spinner
-				style={{ margin: '0 auto', marginLeft: '50%' }}
-				animation='border'
-				variant='primary'
-				size='lg'
-			/> */}
+						style={{ margin: '0 auto', marginLeft: '50%' }}
+						animation='border'
+						variant='primary'
+						size='lg'
+					/> */}
 					<Spin size='large' style={{ margin: '0 auto', marginLeft: '50%' }} />
 				</div>
 			) : (
@@ -86,7 +85,8 @@ function ApproveTransfer() {
 							<td>Student ID</td>
 							<td>Program</td>
 							<td>View</td>
-							<td>Clear</td>
+							<td>Completed</td>
+							{/* <td>Move to complete</td> */}
 							<td>Delete</td>
 						</tr>
 					</thead>
@@ -94,39 +94,46 @@ function ApproveTransfer() {
 					<tbody>
 						{items.map((item) => (
 							<tr key={item._id}>
-								<td>{item.id}</td>
 								<td>
-									<Badge variant='primary'>{item.program}</Badge>
+									<Badge variant='primary'>{item.id}</Badge>
 								</td>
+								<td>{item.program}</td>
 								<td>
-									<ViewTransferModal
+									<ViewClearanceModal
 										key={item._id}
 										id={item.id}
 										name={item.name}
-										option={item.program}
-										program={item.programSelect}
+										program={item.program}
+										option={item.option}
 										campus={item.campus}
 										session={item.session}
 										year={item.year}
 										level={item.level}
 										semester={item.semester}
-										from={item.from}
-										to={item.to}
-										reason={item.reason}
+										financialdepartmentofficer={item.financialdepartmentofficer}
+										headofdepartmentofficer={item.headofdepartmentofficer}
+										libraryofficer={item.libraryofficer}
 									/>
 								</td>
 								<td>
-									<TransferApproval
+									{item.financialdepartment &&
+									item.headofdepartment &&
+									item.library ? (
+										<Badge variant='success'>Yes</Badge>
+									) : (
+										<Badge variant='danger'>No </Badge>
+									)}
+								</td>
+								{/* <td>
+									<PickedClearance
 										key={item._id}
 										id={item._id}
-										approveHandlerSuccess={approveHandlerSuccess}
-										approveHandlerError={approveHandlerError}
-										// clearHandlerSuccess={clearHandlerSuccess}
-										// clearHandlerError={clearHandlerError}
+										statusHandlerSuccess={statusHandlerSuccess}
+										statusHandlerError={statusHandlerError}
 									/>
-								</td>
+								</td> */}
 								<td>
-									<DeleteTransfer
+									<DeleteClearance
 										key={item._id}
 										id={item._id}
 										deleteHandlerSuccess={deleteHandlerSuccess}
@@ -142,4 +149,4 @@ function ApproveTransfer() {
 	);
 }
 
-export default ApproveTransfer;
+export default ClearancePicked;

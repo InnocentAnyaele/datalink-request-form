@@ -10,6 +10,7 @@ import FinancialDepartment from './components/financialDepartment/FinancialDepar
 import HeadOfDepartment from './components/headOfDepartment/HeadOfDepartment';
 import Library from './components/library/Library';
 import Registrar from './components/registrar/Registrar';
+import Admin from './components/admin/Admin';
 
 function App() {
 	return (
@@ -36,6 +37,7 @@ function App() {
 				<Route path='/headOfDepartment' component={HeadOfDepartment} />
 				<Route path='/library' component={Library} />
 				<Route path='/registrar' component={Registrar} />
+				<Route path='/admin' component={Admin} />
 			</Switch>
 		</Router>
 	);

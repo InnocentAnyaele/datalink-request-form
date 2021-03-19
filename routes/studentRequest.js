@@ -20,4 +20,17 @@ router.get(
 	StudentRequestController.getStudentRequestPaidFalse,
 );
 router.patch('/confirmPayment/:id', StudentRequestController.confirmPayment);
+router.patch('/completeRequest/:id', StudentRequestController.CompleteRequest);
+router.patch('/pickedRequest/:id', StudentRequestController.PickedRequest);
+router.get(
+	'/searchCompleteRequest/:id',
+	StudentRequestController.searchCompleteRequest,
+);
+router.get(
+	'/searchPickedRequest/:id',
+	StudentRequestController.searchPickedRequest,
+);
+router.get('/getCompleteRequest', StudentRequestController.getCompleteRequest);
+router.get('/getPickedRequest', StudentRequestController.getPickedRequest);
+
 module.exports = router;

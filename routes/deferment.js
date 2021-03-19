@@ -14,5 +14,17 @@ router.get(
 	DefermentController.searchDefermentFalse,
 );
 router.patch('/confirmDeferment/:id', DefermentController.confirmDeferment);
+router.patch('/completeDeferment/:id', DefermentController.completeDeferment);
+router.patch('/pickedDeferment/:id', DefermentController.pickedDeferment);
+router.get('/getCompleteDeferment', DefermentController.getCompleteDeferment);
+router.get('/getPickedDeferment', DefermentController.getPickedDeferment);
+router.get(
+	'/searchCompleteDeferment/:id',
+	DefermentController.searchCompleteDeferment,
+);
+router.get(
+	'/searchPickedDeferment/:id',
+	DefermentController.searchPickedDeferment,
+);
 
 module.exports = router;

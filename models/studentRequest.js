@@ -42,6 +42,9 @@ const studentRequestSchema = new Schema(
 		authentication: {
 			type: Number,
 		},
+		additional: {
+			type: Number,
+		},
 		visa: {
 			type: Number,
 		},

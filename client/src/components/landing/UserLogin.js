@@ -16,7 +16,7 @@ function UserLogin() {
 	const handleShow = () => setShow(true);
 
 	const [financialDepartmentAuth, setFinancialDepartmentAuth] = useState(false);
-	// const [adminAuth, setAdminAuth] = useState(false);
+	const [adminAuth, setAdminAuth] = useState(false);
 	const [headOfDepartmentAuth, setHeadOfDepartmentAuth] = useState(false);
 	const [libraryAuth, setLibraryAuth] = useState(false);
 	const [registrarAuth, setRegistrarAuth] = useState(false);
@@ -48,6 +48,9 @@ function UserLogin() {
 				if (userSelect === 'registrar') {
 					setRegistrarAuth(res.data.auth);
 				}
+				if (userSelect === 'admin') {
+					setAdminAuth(res.data.auth);
+				}
 			})
 			.catch((err) => {
 				if (err.response.status === 400) {
@@ -77,7 +80,10 @@ function UserLogin() {
 		return <Redirect to='/library/libraryClearStudent' />;
 	}
 	if (registrarAuth) {
-		return <Redirect to='/registrar/registrarApproveTransfer'/>;
+		return <Redirect to='/registrar/registrarApproveTransfer' />;
+	}
+	if (adminAuth) {
+		return <Redirect to='/admin/adminStudentRequestFormApproved' />;
 	}
 
 	return (

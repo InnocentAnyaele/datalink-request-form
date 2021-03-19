@@ -12,6 +12,7 @@ const addStudentRequest = (req, res, next) => {
 		contact: req.body.contact,
 		address: req.body.address,
 		attestation: req.body.attestation,
+		additional: req.body.additional,
 		transcript: req.body.transcript,
 		internship: req.body.internship,
 		authentication: req.body.authentication,
@@ -71,7 +72,7 @@ const getStudentRequest = (req, res, next) => {
 };
 
 const getStudentRequestPaidTrue = (req, res, next) => {
-	StudentRequest.find({ paid: true })
+	StudentRequest.find({ $and: [{ paid: true }, { status: 'pending' }] })
 		.sort({ createdAt: -1 })
 		.then((data) => {
 			res.status(200).json(data);
@@ -107,7 +108,11 @@ const searchStudentRequestPaidFalse = (req, res, next) => {
 
 const searchStudentRequestPaidTrue = (req, res, next) => {
 	StudentRequest.find({
-		$and: [{ id: { $regex: req.params.id } }, { paid: true }],
+		$and: [
+			{ id: { $regex: req.params.id } },
+			{ paid: true },
+			{ status: 'pending' },
+		],
 	})
 		.sort({ createdAt: -1 })
 		.then((data) => {
@@ -136,6 +141,94 @@ const confirmPayment = (req, res, next) => {
 		});
 };
 
+const CompleteRequest = (req, res, next) => {
+	StudentRequest.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.status = 'completed';
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Status Changed');
+				})
+				.catch(() => {
+					res.status(500).send('Somthing went wrong');
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const searchCompleteRequest = (req, res, next) => {
+	StudentRequest.find({
+		$and: [{ id: { $regex: req.params.id } }, { status: 'completed' }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const getCompleteRequest = (req, res, next) => {
+	StudentRequest.find({
+		status: 'completed',
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const PickedRequest = (req, res, next) => {
+	StudentRequest.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.status = 'picked';
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Status Changed');
+				})
+				.catch(() => {
+					res.status(500).send('Somthing went wrong');
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const searchPickedRequest = (req, res, next) => {
+	StudentRequest.find({
+		$and: [{ id: { $regex: req.params.id } }, { status: 'picked' }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const getPickedRequest = (req, res, next) => {
+	StudentRequest.find({
+		status: 'picked',
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
 module.exports = {
 	addStudentRequest,
 	deleteStudentRequest,
@@ -145,4 +238,10 @@ module.exports = {
 	searchStudentRequestPaidFalse,
 	searchStudentRequestPaidTrue,
 	confirmPayment,
+	CompleteRequest,
+	PickedRequest,
+	searchCompleteRequest,
+	searchPickedRequest,
+	getCompleteRequest,
+	getPickedRequest,
 };

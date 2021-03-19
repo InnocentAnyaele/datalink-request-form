@@ -113,6 +113,7 @@ function StudentRequestFormPage() {
 				transcript: transcript,
 				internship: internship,
 				authentication: authentication,
+				additional: additional,
 				visa: visa,
 				express: express,
 				general: general,

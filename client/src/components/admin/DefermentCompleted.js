@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './Registrar.css';
 import { Alert, Table, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import Search from '../Search';
 import { Spin } from 'antd';
 
-import ViewTransferModal from './ViewTransferModal';
-import DeleteTransfer from './DeleteTransfer';
-import TransferApproval from './TransferApproval';
+import ViewDefermentModal from '../registrar/ViewDefermentModal';
+import DeleteDeferment from '../registrar/DeleteDeferment';
+import PickedDeferment from './PickedDeferment';
 
-function ApproveTransfer() {
+function DefermentCompleted() {
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [query, setQuery] = useState('');
@@ -18,13 +17,13 @@ function ApproveTransfer() {
 
 	useEffect(() => {
 		if (query !== '') {
-			axios.get(`/transfer/searchTransferFalse/${query}`).then((res) => {
+			axios.get(`/deferment/searchCompleteDeferment/${query}`).then((res) => {
 				setItems(res.data);
 				setLoading(false);
 			});
 		} else {
 			axios
-				.get(`/transfer/getTransferFalse`)
+				.get(`/deferment/getCompleteDeferment`)
 				.then((res) => {
 					setItems(res.data);
 					setLoading(false);
@@ -51,12 +50,12 @@ function ApproveTransfer() {
 		setAlert('Server error. Try again later');
 	};
 
-	const approveHandlerSuccess = () => {
+	const statusHandlerSuccess = () => {
 		setAlertVariant('success');
 		setAlert('Request Approved by Registrar');
 	};
 
-	const approveHandlerError = () => {
+	const statusHandlerError = () => {
 		setAlertVariant('danger');
 		setAlert('Server error. Try again later');
 	};
@@ -64,7 +63,7 @@ function ApproveTransfer() {
 	return (
 		<>
 			<h1 className='text-muted' style={{ fontSize: '20px' }}>
-				Approve Transfer Page
+				Completed Deferment Page
 			</h1>
 			<hr></hr>
 			<Search query={query} onChange={handleQueryRequest} />
@@ -86,7 +85,7 @@ function ApproveTransfer() {
 							<td>Student ID</td>
 							<td>Program</td>
 							<td>View</td>
-							<td>Clear</td>
+							<td>Move to picked up</td>
 							<td>Delete</td>
 						</tr>
 					</thead>
@@ -99,7 +98,7 @@ function ApproveTransfer() {
 									<Badge variant='primary'>{item.program}</Badge>
 								</td>
 								<td>
-									<ViewTransferModal
+									<ViewDefermentModal
 										key={item._id}
 										id={item.id}
 										name={item.name}
@@ -116,17 +115,17 @@ function ApproveTransfer() {
 									/>
 								</td>
 								<td>
-									<TransferApproval
+									<PickedDeferment
 										key={item._id}
 										id={item._id}
-										approveHandlerSuccess={approveHandlerSuccess}
-										approveHandlerError={approveHandlerError}
+										statusHandlerSuccess={statusHandlerSuccess}
+										statusHandlerError={statusHandlerError}
 										// clearHandlerSuccess={clearHandlerSuccess}
 										// clearHandlerError={clearHandlerError}
 									/>
 								</td>
 								<td>
-									<DeleteTransfer
+									<DeleteDeferment
 										key={item._id}
 										id={item._id}
 										deleteHandlerSuccess={deleteHandlerSuccess}
@@ -142,4 +141,4 @@ function ApproveTransfer() {
 	);
 }
 
-export default ApproveTransfer;
+export default DefermentCompleted;

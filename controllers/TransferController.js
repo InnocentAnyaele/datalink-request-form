@@ -63,7 +63,7 @@ const getTransferFalse = (req, res, next) => {
 };
 
 const getTransferTrue = (req, res, next) => {
-	Transfer.find({ approved: true })
+	Transfer.find({ $and: [{ approved: false }, { status: 'pending' }] })
 		.sort({ createdAt: -1 })
 		.then((data) => {
 			res.status(200).json(data);
@@ -75,7 +75,11 @@ const getTransferTrue = (req, res, next) => {
 
 const searchTransferTrue = (req, res, next) => {
 	Transfer.find({
-		$and: [{ id: { $regex: req.params.id } }, { approved: true }],
+		$and: [
+			{ id: { $regex: req.params.id } },
+			{ approved: true },
+			{ status: 'pending' },
+		],
 	})
 		.sort({ createdAt: -1 })
 		.then((data) => {
@@ -117,6 +121,90 @@ const confirmTransfer = (req, res, next) => {
 		});
 };
 
+const completeTransfer = (req, res, next) => {
+	Transfer.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.status = 'completed';
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Status Changed');
+				})
+				.catch(() => {
+					res.status(400).send("Can't change. Try again later");
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const pickedTransfer = (req, res, next) => {
+	Transfer.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.status = 'picked';
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Status Changed');
+				})
+				.catch(() => {
+					res.status(400).send("Can't change. Try again later");
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const getCompleteTransfer = (req, res, next) => {
+	Transfer.find({ status: 'completed' })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const getPickedTransfer = (req, res, next) => {
+	Transfer.find({ status: 'picked' })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const searchCompleteTransfer = (req, res, next) => {
+	Transfer.find({
+		$and: [{ id: { $regex: req.params.id } }, { status: 'completed' }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const searchPickedTransfer = (req, res, next) => {
+	Transfer.find({
+		$and: [{ id: { $regex: req.params.id } }, { status: 'picked' }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
 module.exports = {
 	addTransfer,
 	deleteTransfer,
@@ -126,4 +214,10 @@ module.exports = {
 	searchTransferTrue,
 	confirmTransfer,
 	getTransfer,
+	completeTransfer,
+	pickedTransfer,
+	getCompleteTransfer,
+	getPickedTransfer,
+	searchCompleteTransfer,
+	searchPickedTransfer,
 };

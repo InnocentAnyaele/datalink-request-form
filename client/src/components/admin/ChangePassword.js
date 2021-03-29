@@ -17,7 +17,7 @@ function ChangePassword(props) {
 			.patch('/user/changePassword', {
 				password: password,
 				newpassword: newPassword,
-				username: 'financialdepartment',
+				username: 'admin',
 			})
 			.then(() => {
 				setAlertVariant('success');

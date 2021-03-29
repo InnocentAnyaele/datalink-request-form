@@ -7,6 +7,8 @@ require('dotenv').config();
 const UserRoute = require('./routes/user');
 const StudentRequestRoute = require('./routes/studentRequest');
 const ClearanceRoute = require('./routes/clearance');
+const TransferRoute = require('./routes/transfer');
+const DefermentRoute = require('./routes/deferment');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -30,6 +32,8 @@ connection.once('open', () => {
 app.use('/user', UserRoute);
 app.use('/studentRequest', StudentRequestRoute);
 app.use('/clearance', ClearanceRoute);
+app.use('/transfer', TransferRoute);
+app.use('/deferment', DefermentRoute);
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'));

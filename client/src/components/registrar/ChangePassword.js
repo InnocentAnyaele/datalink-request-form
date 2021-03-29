@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
-function ChangePassword(props) {
+function ChangePassword() {
 	const [password, setPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');
 	const [alert, setAlert] = useState('');
@@ -11,13 +11,11 @@ function ChangePassword(props) {
 	const submitHandler = async (e) => {
 		e.preventDefault();
 
-		console.log(props.username);
-
 		await axios
 			.patch('/user/changePassword', {
 				password: password,
 				newpassword: newPassword,
-				username: 'financialdepartment',
+				username: 'registrar',
 			})
 			.then(() => {
 				setAlertVariant('success');

@@ -48,6 +48,78 @@ const getClearance = (req, res, next) => {
 		});
 };
 
+const getClearancePending = (req, res, next) => {
+	Clearance.find({ status: 'pending' })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+};
+
+const searchClearancePending = (req, res, next) => {
+	Clearance.find({
+		status: 'pending',
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+getClearanceTrue = (req, res, next) => {
+	Clearance.find({
+		$and: [
+			{ financialdepartment: true },
+			{ headofdepartment: true },
+			{ library: true },
+		],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const searchClearanceTrue = (req, res, next) => {
+	Clearance.find({
+		$and: [
+			{ id: { $regex: req.params.id } },
+			{ financialdepartment: true },
+			{ headofdepartment: true },
+			{ library: true },
+		],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const searchClearance = (req, res, next) => {
+	Clearance.find({
+		id: { $regex: req.params.id },
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
 const getClearanceFinancialDepartment = (req, res, next) => {
 	Clearance.find({ financialdepartment: false })
 		.sort({ createdAt: -1 })
@@ -59,9 +131,57 @@ const getClearanceFinancialDepartment = (req, res, next) => {
 		});
 };
 
+const getClearanceHeadOfDepartment = (req, res, next) => {
+	Clearance.find({ headofdepartment: false })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+};
+
+const getClearanceLibrary = (req, res, next) => {
+	Clearance.find({ library: false })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+};
+
 const searchClearanceFinancialDepartment = (req, res, next) => {
 	Clearance.find({
 		$and: [{ id: { $regex: req.params.id } }, { financialdepartment: false }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const searchClearanceHeadOfDepartment = (req, res, next) => {
+	Clearance.find({
+		$and: [{ id: { $regex: req.params.id } }, { headofdepartment: false }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const searchClearanceLibrary = (req, res, next) => {
+	Clearance.find({
+		$and: [{ id: { $regex: req.params.id } }, { library: false }],
 	})
 		.sort({ createdAt: -1 })
 		.then((data) => {
@@ -83,11 +203,133 @@ const confirmFinancialDepartment = (req, res, next) => {
 					res.status(200).send('Finanicial department Cleared');
 				})
 				.catch(() => {
-					res.status(200).send("Can't clear financial department");
+					res.status(400).send("Can't clear financial department");
 				});
 		})
 		.catch((err) => {
 			res.status(500).send("Can't find user");
+		});
+};
+
+const confirmHeadOfDepartment = (req, res, next) => {
+	Clearance.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.headofdepartment = true;
+			request.headofdepartmentofficer = req.body.officer;
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Head of Department Cleared');
+				})
+				.catch(() => {
+					res.status(400).send("Can't clear head of department");
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const confirmLibrary = (req, res, next) => {
+	Clearance.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.library = true;
+			request.libraryofficer = req.body.officer;
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Library Cleared');
+				})
+				.catch(() => {
+					res.status(400).send("Can't clear Library");
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const completeClearance = (req, res, next) => {
+	Clearance.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.status = 'completed';
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Clearance completed');
+				})
+				.catch(() => {
+					res.status(400).send("Can't complete clearance");
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const getCompleteClearance = (req, res, next) => {
+	Clearance.find({ status: 'completed' })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+};
+
+const searchCompleteClearance = (req, res, next) => {
+	Clearance.find({
+		$and: [{ id: { $regex: req.params.id } }, { status: 'completed' }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
+		});
+};
+
+const pickedClearance = (req, res, next) => {
+	Clearance.findOne({ _id: req.params.id })
+		.then((request) => {
+			request.status = 'picked';
+			request
+				.save()
+				.then(() => {
+					res.status(200).send('Clearance completed');
+				})
+				.catch(() => {
+					res.status(400).send("Can't complete clearance");
+				});
+		})
+		.catch((err) => {
+			res.status(500).send("Can't find user");
+		});
+};
+
+const getPickedClearance = (req, res, next) => {
+	Clearance.find({ status: 'picked' })
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+};
+
+const searchPickedClearance = (req, res, next) => {
+	Clearance.find({
+		$and: [{ id: { $regex: req.params.id } }, { status: 'completed' }],
+	})
+		.sort({ createdAt: -1 })
+		.then((data) => {
+			res.status(200).json(data);
+		})
+		.catch((err) => {
+			res.status(404).send(err);
 		});
 };
 
@@ -98,4 +340,21 @@ module.exports = {
 	searchClearanceFinancialDepartment,
 	confirmFinancialDepartment,
 	deleteClearance,
+	getClearanceHeadOfDepartment,
+	searchClearanceHeadOfDepartment,
+	confirmHeadOfDepartment,
+	getClearanceLibrary,
+	searchClearanceLibrary,
+	confirmLibrary,
+	searchClearanceTrue,
+	getClearanceTrue,
+	searchClearance,
+	completeClearance,
+	getCompleteClearance,
+	searchCompleteClearance,
+	pickedClearance,
+	getPickedClearance,
+	searchPickedClearance,
+	getClearancePending,
+	searchClearancePending,
 };

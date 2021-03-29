@@ -15,24 +15,24 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import PersonIcon from '@material-ui/icons/Person';
-import PaymentIcon from '@material-ui/icons/Payment';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+
+import ForwardIcon from '@material-ui/icons/Forward';
 import DnsIcon from '@material-ui/icons/Dns';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BuildIcon from '@material-ui/icons/Build';
 
-import './financialDepartment.css';
+import './Registrar.css';
 
 import { Switch, Link, Route, Redirect } from 'react-router-dom';
-import ConfirmPayment from './ConfirmPayment';
 import ChangePassword from './ChangePassword';
-import ClearStudent from './ClearStudent';
+import ApproveTransfer from './ApproveTransfer';
+import ApproveDeferment from './ApproveDeferment';
 
 const drawerWidth = 240;
 
@@ -108,7 +108,7 @@ export default function FinancialDepartment() {
 	const studentRef = useRef(null);
 
 	useEffect(() => {
-		document.title = 'Financial Department';
+		document.title = 'Registrar';
 	});
 
 	const handleStudentMenu = () => {
@@ -190,7 +190,7 @@ export default function FinancialDepartment() {
 							) : (
 								<ChevronLeftIcon />
 							)}
-							<span style={{ fontSize: '20px' }}>Finanical department</span>
+							<span style={{ fontSize: '20px' }}>Registrar</span>
 						</IconButton>
 					</div>
 					<Divider />
@@ -198,9 +198,9 @@ export default function FinancialDepartment() {
 					<List>
 						<ListItem button onClick={handleStudentMenu}>
 							<ListItemIcon>
-								<PersonIcon />
+								<ForwardIcon />
 							</ListItemIcon>
-							<ListItemText primary={'Student Form'} />
+							<ListItemText primary={'Transfer'} />
 							{studentMenu ? <ExpandLess /> : <ExpandMore />}
 						</ListItem>
 
@@ -214,13 +214,13 @@ export default function FinancialDepartment() {
 								disablePadding
 								style={{ paddingLeft: '10px' }}>
 								<Link
-									to='/financialDepartment/financialDepartmentConfirmPayment'
+									to='/registrar/registrarApproveTransfer'
 									style={{ textDecoration: 'none', color: 'black' }}>
 									<ListItem button className={classes.nested}>
 										<ListItemIcon>
-											<PaymentIcon />
+											<DoneAllIcon />
 										</ListItemIcon>
-										<ListItemText primary={'Confirm Payment'} />
+										<ListItemText primary={'Approve Transfer'} />
 									</ListItem>
 								</Link>
 							</List>
@@ -230,7 +230,7 @@ export default function FinancialDepartment() {
 							<ListItemIcon>
 								<DnsIcon />
 							</ListItemIcon>
-							<ListItemText primary={'Clearance'} />
+							<ListItemText primary={'Deferment'} />
 							{clearanceMenu ? <ExpandLess /> : <ExpandMore />}
 						</ListItem>
 
@@ -240,13 +240,13 @@ export default function FinancialDepartment() {
 								disablePadding
 								style={{ paddingLeft: '10px' }}>
 								<Link
-									to='/financialDepartment/financialDepartmentClearStudent'
+									to='/registrar/registrarApproveDeferment'
 									style={{ textDecoration: 'none', color: 'black' }}>
 									<ListItem button className={classes.nested}>
 										<ListItemIcon>
-											<AssignmentTurnedInIcon />
+											<DoneAllIcon />
 										</ListItemIcon>
-										<ListItemText primary={'Clear Student'} />
+										<ListItemText primary={'Approve Deferment'} />
 									</ListItem>
 								</Link>
 							</List>
@@ -266,7 +266,7 @@ export default function FinancialDepartment() {
 								disablePadding
 								style={{ paddingLeft: '10px' }}>
 								<Link
-									to='/financialDepartment/financialDepartmentChangePassword'
+									to='/registrar/registrarChangePassword'
 									style={{ textDecoration: 'none', color: 'black' }}>
 									<ListItem button className={classes.nested}>
 										<ListItemIcon>
@@ -295,17 +295,17 @@ export default function FinancialDepartment() {
 					<Switch>
 						<Route
 							exact
-							path='/financialDepartment/financialDepartmentConfirmPayment'
-							component={ConfirmPayment}
+							path='/registrar/registrarApproveDeferment'
+							component={ApproveDeferment}
 						/>
 						<Route
 							exact
-							path='/financialDepartment/financialDepartmentClearStudent'
-							component={ClearStudent}
+							path='/registrar/registrarApproveTransfer'
+							component={ApproveTransfer}
 						/>
 						<Route
 							exact
-							path='/financialDepartment/financialDepartmentChangePassword'
+							path='/registrar/registrarChangePassword'
 							component={ChangePassword}
 						/>
 					</Switch>

@@ -15,24 +15,37 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 
+import HourglassFullIcon from '@material-ui/icons/HourglassFull';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import PersonIcon from '@material-ui/icons/Person';
-import PaymentIcon from '@material-ui/icons/Payment';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import DnsIcon from '@material-ui/icons/Dns';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BuildIcon from '@material-ui/icons/Build';
 
-import './financialDepartment.css';
+import './Admin.css';
 
 import { Switch, Link, Route, Redirect } from 'react-router-dom';
-import ConfirmPayment from './ConfirmPayment';
 import ChangePassword from './ChangePassword';
-import ClearStudent from './ClearStudent';
+import StudentRequestFormApproved from './StudentRequestFormApproved';
+import StudentRequestFormCompleted from './StudentRequestFormCompleted';
+import StudentRequestFormPicked from './StudentRequestFormPicked';
+import ClearanceApproved from './ClearanceApproved';
+import ClearanceCompleted from './ClearanceCompleted';
+import ClearancePicked from './ClearancePicked';
+import TransferApproved from './TransferApproved';
+import TransferCompleted from './TransferCompleted';
+import TransferPicked from './TransferPicked';
+import DefermentApproved from './DefermentApproved';
+import DefermentCompleted from './DefermentCompleted';
+import DeferementPicked from './DefermentPicked';
 
 const drawerWidth = 240;
 
@@ -98,18 +111,28 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function FinancialDepartment() {
+export default function Admin() {
 	const [studentMenu, setStudentMenu] = React.useState(false);
 	const [clearanceMenu, setClearanceMenu] = React.useState(false);
 	const [settingsMenu, setSettingsMenu] = React.useState(false);
+	const [transferMenu, setTransferMenu] = React.useState(false);
+	const [defermentMenu, setDefermentMenu] = React.useState(false);
 
 	const [logout, setLogout] = React.useState(false);
 
 	const studentRef = useRef(null);
 
 	useEffect(() => {
-		document.title = 'Financial Department';
+		document.title = 'Admin';
 	});
+
+	const handleDefermentMenu = () => {
+		setDefermentMenu(!defermentMenu);
+	};
+
+	const handleTransferMenu = () => {
+		setTransferMenu(!transferMenu);
+	};
 
 	const handleStudentMenu = () => {
 		setStudentMenu(!studentMenu);
@@ -190,7 +213,7 @@ export default function FinancialDepartment() {
 							) : (
 								<ChevronLeftIcon />
 							)}
-							<span style={{ fontSize: '20px' }}>Finanical department</span>
+							<span style={{ fontSize: '20px' }}>Admin</span>
 						</IconButton>
 					</div>
 					<Divider />
@@ -198,7 +221,7 @@ export default function FinancialDepartment() {
 					<List>
 						<ListItem button onClick={handleStudentMenu}>
 							<ListItemIcon>
-								<PersonIcon />
+								<PersonIcon style={{ color: 'black' }} />
 							</ListItemIcon>
 							<ListItemText primary={'Student Form'} />
 							{studentMenu ? <ExpandLess /> : <ExpandMore />}
@@ -214,13 +237,33 @@ export default function FinancialDepartment() {
 								disablePadding
 								style={{ paddingLeft: '10px' }}>
 								<Link
-									to='/financialDepartment/financialDepartmentConfirmPayment'
+									to='/admin/adminStudentRequestFormApproved'
 									style={{ textDecoration: 'none', color: 'black' }}>
 									<ListItem button className={classes.nested}>
 										<ListItemIcon>
-											<PaymentIcon />
+											<ThumbUpIcon />
 										</ListItemIcon>
-										<ListItemText primary={'Confirm Payment'} />
+										<ListItemText primary={'Approved'} />
+									</ListItem>
+								</Link>
+								<Link
+									to='/admin/adminStudentRequestFormCompleted'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<LibraryAddCheckIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Completed'} />
+									</ListItem>
+								</Link>
+								<Link
+									to='/admin/adminStudentRequestFormPicked'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<DoneAllIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Picked'} />
 									</ListItem>
 								</Link>
 							</List>
@@ -228,7 +271,7 @@ export default function FinancialDepartment() {
 
 						<ListItem button onClick={handleClearanceMenu}>
 							<ListItemIcon>
-								<DnsIcon />
+								<DnsIcon style={{ color: 'black' }} />
 							</ListItemIcon>
 							<ListItemText primary={'Clearance'} />
 							{clearanceMenu ? <ExpandLess /> : <ExpandMore />}
@@ -240,13 +283,125 @@ export default function FinancialDepartment() {
 								disablePadding
 								style={{ paddingLeft: '10px' }}>
 								<Link
-									to='/financialDepartment/financialDepartmentClearStudent'
+									to='/admin/adminClearanceApproved'
 									style={{ textDecoration: 'none', color: 'black' }}>
 									<ListItem button className={classes.nested}>
 										<ListItemIcon>
-											<AssignmentTurnedInIcon />
+											<ThumbUpIcon />
 										</ListItemIcon>
-										<ListItemText primary={'Clear Student'} />
+										<ListItemText primary={'Approved'} />
+									</ListItem>
+								</Link>
+								<Link
+									to='/admin/adminClearanceCompleted'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<LibraryAddCheckIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Completed'} />
+									</ListItem>
+								</Link>
+								<Link
+									to='/admin/adminClearancePicked'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<DoneAllIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Picked'} />
+									</ListItem>
+								</Link>
+							</List>
+						</Collapse>
+
+						<ListItem button onClick={handleTransferMenu}>
+							<ListItemIcon>
+								<DoubleArrowIcon style={{ color: 'black' }} />
+							</ListItemIcon>
+							<ListItemText primary={'Transfer'} />
+							{settingsMenu ? <ExpandLess /> : <ExpandMore />}
+						</ListItem>
+
+						<Collapse in={transferMenu} timeout='auto' unmountOnExit>
+							<List
+								component='div'
+								disablePadding
+								style={{ paddingLeft: '10px' }}>
+								<Link
+									to='/admin/adminTransferApproved'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<ThumbUpIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Approved'} />
+									</ListItem>
+								</Link>
+								<Link
+									to='/admin/adminTransferCompleted'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<LibraryAddCheckIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Completed'} />
+									</ListItem>
+								</Link>
+								<Link
+									to='/admin/adminTransferPicked'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<DoneAllIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Picked'} />
+									</ListItem>
+								</Link>
+							</List>
+						</Collapse>
+
+						<ListItem button onClick={handleDefermentMenu}>
+							<ListItemIcon>
+								<HourglassFullIcon style={{ color: 'black' }} />
+							</ListItemIcon>
+							<ListItemText primary={'Deferment'} />
+							{settingsMenu ? <ExpandLess /> : <ExpandMore />}
+						</ListItem>
+
+						<Collapse in={defermentMenu} timeout='auto' unmountOnExit>
+							<List
+								component='div'
+								disablePadding
+								style={{ paddingLeft: '10px' }}>
+								<Link
+									to='/admin/adminDefermentApproved'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<ThumbUpIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Approved'} />
+									</ListItem>
+								</Link>
+								<Link
+									to='/admin/adminDefermentCompleted'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<LibraryAddCheckIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Completed'} />
+									</ListItem>
+								</Link>
+								<Link
+									to='/admin/adminDefermentPicked'
+									style={{ textDecoration: 'none', color: 'black' }}>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<DoneAllIcon />
+										</ListItemIcon>
+										<ListItemText primary={'Picked'} />
 									</ListItem>
 								</Link>
 							</List>
@@ -254,7 +409,7 @@ export default function FinancialDepartment() {
 
 						<ListItem button onClick={handleSettingsMenu}>
 							<ListItemIcon>
-								<SettingsIcon />
+								<SettingsIcon style={{ color: 'black' }} />
 							</ListItemIcon>
 							<ListItemText primary={'Settings'} />
 							{settingsMenu ? <ExpandLess /> : <ExpandMore />}
@@ -266,7 +421,7 @@ export default function FinancialDepartment() {
 								disablePadding
 								style={{ paddingLeft: '10px' }}>
 								<Link
-									to='/financialDepartment/financialDepartmentChangePassword'
+									to='/admin/adminChangePassword'
 									style={{ textDecoration: 'none', color: 'black' }}>
 									<ListItem button className={classes.nested}>
 										<ListItemIcon>
@@ -295,17 +450,67 @@ export default function FinancialDepartment() {
 					<Switch>
 						<Route
 							exact
-							path='/financialDepartment/financialDepartmentConfirmPayment'
-							component={ConfirmPayment}
+							path='/admin/adminStudentRequestFormApproved'
+							component={StudentRequestFormApproved}
 						/>
 						<Route
 							exact
-							path='/financialDepartment/financialDepartmentClearStudent'
-							component={ClearStudent}
+							path='/admin/adminStudentRequestFormCompleted'
+							component={StudentRequestFormCompleted}
 						/>
 						<Route
 							exact
-							path='/financialDepartment/financialDepartmentChangePassword'
+							path='/admin/adminStudentRequestFormPicked'
+							component={StudentRequestFormPicked}
+						/>
+						<Route
+							exact
+							path='/admin/adminClearanceApproved'
+							component={ClearanceApproved}
+						/>
+						<Route
+							exact
+							path='/admin/adminClearanceCompleted'
+							component={ClearanceCompleted}
+						/>
+						<Route
+							exact
+							path='/admin/adminClearancePicked'
+							component={ClearancePicked}
+						/>
+						<Route
+							exact
+							path='/admin/adminTransferApproved'
+							component={TransferApproved}
+						/>
+						<Route
+							exact
+							path='/admin/adminTransferCompleted'
+							component={TransferCompleted}
+						/>
+						<Route
+							exact
+							path='/admin/adminTransferPicked'
+							component={TransferPicked}
+						/>
+						<Route
+							exact
+							path='/admin/adminDefermentApproved'
+							component={DefermentApproved}
+						/>
+						<Route
+							exact
+							path='/admin/adminDefermentCompleted'
+							component={DefermentCompleted}
+						/>
+						<Route
+							exact
+							path='/admin/adminDefermentPicked'
+							component={DeferementPicked}
+						/>
+						<Route
+							exact
+							path='/admin/adminChangePassword'
 							component={ChangePassword}
 						/>
 					</Switch>

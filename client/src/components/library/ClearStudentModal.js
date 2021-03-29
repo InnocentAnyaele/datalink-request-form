@@ -19,12 +19,10 @@ function ClearStudentModal(props) {
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		axios
-			.patch(`/clearance/confirmFinancialDepartment/${props.id}`, {
-				officer: officer,
-			})
+			.patch(`/clearance/confirmLibrary/${props.id}`, { officer: officer })
 			.then(() => {
 				setAlertVariant('success');
-				setAlert('Student has been cleared by the financial department');
+				setAlert('Student has been cleared by Library');
 			})
 			.catch(() => {
 				setAlertVariant('danger');

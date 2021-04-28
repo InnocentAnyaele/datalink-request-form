@@ -10,9 +10,9 @@ import UserLogin from './UserLogin';
 
 function Navigation() {
 	return (
-		<Navbar>
+		<Navbar style={{ backgroundColor: 'transparent' }}>
 			<Navbar.Brand className='nav-name' href='#home'>
-				DATALINK <span style={{ color: '#1360ef' }}>REQUEST FORMS</span>
+				<span style={{ color: '#7C1315' }}>DATALINK REQUEST FORMS</span>
 			</Navbar.Brand>
 
 			{/* <NavDropdown
@@ -38,7 +38,10 @@ function Navigation() {
 				</NavDropdown.Item>
 			</NavDropdown> */}
 
-			<Button className='ml-auto' vairant='primary'>
+			<Button
+				className='ml-auto'
+				variant='primary'
+				style={{ backgroundColor: '#7C1315' }}>
 				<UserLogin />
 			</Button>
 		</Navbar>

@@ -1,5 +1,6 @@
 import React from 'react';
-import svg from '../../assets/img/svg3.svg';
+// import svg from '../../assets/img/svg3.svg';
+import logo from '../../assets/img/datalink.png';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 // import StudentRequestForm from '../forms/StudentRequestForm';
 import { Link } from 'react-router-dom';
@@ -8,7 +9,7 @@ function Home() {
 	return (
 		<div
 			style={{
-				paddingTop: '20px',
+				paddingTop: '60px',
 				display: 'flex',
 				flexDirection: 'row',
 				justifyContent: 'space-evenly',
@@ -18,7 +19,7 @@ function Home() {
 			<div className='heading'>
 				<p className='heading-text'>
 					PUT IN A{' '}
-					<span style={{ color: '#1360ef' }}>
+					<span style={{ color: '#7C1315' }}>
 						<i></i>REQUEST
 					</span>{' '}
 					<br></br> FOR YOUR FORMS HERE
@@ -47,9 +48,9 @@ function Home() {
 			<div style={{ marginBottom: '20px' }}>
 				<img
 					className='img-fluid'
-					src={svg}
+					src={logo}
 					alt='svg'
-					style={{ width: '700px' }}
+					style={{ width: '400px', opacity: '0.5' }}
 				/>
 			</div>
 		</div>

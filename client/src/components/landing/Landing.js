@@ -4,8 +4,7 @@ import Home from './Home';
 
 function Landing() {
 	return (
-		<div
-			style={{ minHeight: '100vh', width: '100%', backgroundColor: '#FFFFF0' }}>
+		<div style={{ height: '100vh', width: '100%', backgroundColor: '#FFFFF0' }}>
 			<Navigation />
 			<Home />
 		</div>

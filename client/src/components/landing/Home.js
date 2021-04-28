@@ -4,6 +4,7 @@ import logo from '../../assets/img/datalink.png';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 // import StudentRequestForm from '../forms/StudentRequestForm';
 import { Link } from 'react-router-dom';
+import './Landing.css';
 
 function Home() {
 	return (
@@ -45,12 +46,12 @@ function Home() {
 				</DropdownButton>
 			</div>
 
-			<div style={{ marginBottom: '20px' }}>
+			<div style={{ marginBottom: '0px' }}>
 				<img
-					className='img-fluid'
+					className='logo img-fluid'
 					src={logo}
 					alt='svg'
-					style={{ width: '400px', opacity: '0.5' }}
+					style={{ opacity: '0.5' }}
 				/>
 			</div>
 		</div>

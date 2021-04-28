@@ -1,6 +1,6 @@
 import React from 'react';
 // import svg from '../../assets/img/svg3.svg';
-import logo from '../../assets/img/datalink.png';
+import logo from '../../assets/img/dlibt.jpg';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 // import StudentRequestForm from '../forms/StudentRequestForm';
 import { Link } from 'react-router-dom';

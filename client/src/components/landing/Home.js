@@ -51,7 +51,7 @@ function Home() {
 					className='logo img-fluid'
 					src={svg}
 					alt='svg'
-					style={{ opacity: '0.5' }}
+					// style={{ opacity: '0.5' }}
 				/>
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 import React from 'react';
-// import svg from '../../assets/img/svg3.svg';
-import logo from '../../assets/img/dlibt.jpg';
+import svg from '../../assets/img/svg3.svg';
+// import logo from '../../assets/img/dlibt.jpg';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 // import StudentRequestForm from '../forms/StudentRequestForm';
 import { Link } from 'react-router-dom';
@@ -49,7 +49,7 @@ function Home() {
 			<div style={{ marginBottom: '0px' }}>
 				<img
 					className='logo img-fluid'
-					src={logo}
+					src={svg}
 					alt='svg'
 					style={{ opacity: '0.5' }}
 				/>

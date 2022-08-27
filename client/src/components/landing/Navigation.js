@@ -12,7 +12,7 @@ function Navigation() {
 	return (
 		<Navbar style={{ backgroundColor: 'transparent' }}>
 			<Navbar.Brand className='nav-name' href='#home'>
-				<span style={{ color: '#7C1315' }}>DATALINK REQUEST FORMS</span>
+				<span style={{ color: '#3366cc' }}>DATALINK REQUEST FORMS</span>
 			</Navbar.Brand>
 
 			{/* <NavDropdown
@@ -41,7 +41,7 @@ function Navigation() {
 			<Button
 				className='ml-auto'
 				variant='primary'
-				style={{ backgroundColor: '#7C1315' }}>
+				style={{ backgroundColor: '#3366cc' }}>
 				<UserLogin />
 			</Button>
 		</Navbar>

@@ -20,7 +20,7 @@ function Home() {
 			<div className='heading'>
 				<p className='heading-text'>
 					PUT IN A{' '}
-					<span style={{ color: '#7C1315' }}>
+					<span style={{ color: '#3366cc' }}>
 						<i></i>REQUEST
 					</span>{' '}
 					<br></br> FOR YOUR FORMS HERE
